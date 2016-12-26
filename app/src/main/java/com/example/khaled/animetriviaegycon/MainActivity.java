@@ -32,14 +32,15 @@ public class MainActivity extends AppCompatActivity
 
     GridView gridView;
     ArrayList<Item> gridArray = new ArrayList<Item>();
+    FragmentManager fragmentManager = getSupportFragmentManager();
+    LeaderActivity Lactivity = new LeaderActivity();
+    com.example.khaled.animetriviaegycon.GridView Gview = new com.example.khaled.animetriviaegycon.GridView();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        com.example.khaled.animetriviaegycon.GridView Gview = new com.example.khaled.animetriviaegycon.GridView();
-        FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction()
                 .replace(R.id.frame, Gview)
                 .commit();
@@ -134,11 +135,10 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_Leader) {
 
-            LeaderActivity Lactivity = new LeaderActivity();
-            FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.beginTransaction()
                     .replace(R.id.frame, Lactivity)
                     .commit();
+
 
         } else if (id == R.id.nav_login){
             startActivity(new Intent(MainActivity.this,LoginActivity.class));
