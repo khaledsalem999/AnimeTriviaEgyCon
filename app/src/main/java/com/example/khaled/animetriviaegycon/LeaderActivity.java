@@ -8,6 +8,8 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -32,6 +34,8 @@ public class LeaderActivity extends Fragment {
         View view = inflater.inflate(R.layout.content_leader, container, false);
         // Inflate the layout for this fragment
 
+        setHasOptionsMenu(true);
+
         ListView lstItems = (ListView)view.findViewById(R.id.lista);
 
         ArrayList<String> prueba = new ArrayList<String>();
@@ -50,5 +54,10 @@ public class LeaderActivity extends Fragment {
         return view;
     }
 
+
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.toolbar_buttons, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
 }
 

@@ -13,6 +13,7 @@ import android.widget.ListAdapter;
  */
 public class ImageAdapter extends BaseAdapter {
     private Context mContext;
+    private Integer[] mThumbIds = new Integer[50];
 
     public ImageAdapter(Context c) {
         mContext = c;
@@ -36,11 +37,15 @@ public class ImageAdapter extends BaseAdapter {
         if (convertView == null) {
             // if it's not recycled, initialize some attributes
             imageView = new ImageView(mContext);
-            imageView.setLayoutParams(new GridView.LayoutParams(350, 350));
+            imageView.setLayoutParams(new GridView.LayoutParams(200, 300));
             imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-            imageView.setPadding(1, 1, 1, 1);
         } else {
             imageView = (ImageView) convertView;
+        }
+
+
+        for(int i=0;i<50;i++){
+            mThumbIds[i] = R.mipmap.naruto;
         }
 
         imageView.setImageResource(mThumbIds[position]);
@@ -49,23 +54,7 @@ public class ImageAdapter extends BaseAdapter {
 
     // references to our images
 
-    private Integer[] mThumbIds = {
-            R.mipmap.narutoicon,
-            R.mipmap.narutoicon,
-            R.mipmap.narutoicon,
-            R.mipmap.narutoicon,
-            R.mipmap.narutoicon,
-            R.mipmap.narutoicon,
-            R.mipmap.narutoicon,
-            R.mipmap.narutoicon,
-            R.mipmap.narutoicon,
-            R.mipmap.narutoicon,
-            R.mipmap.narutoicon,
-            R.mipmap.narutoicon,
-            R.mipmap.narutoicon,
-            R.mipmap.narutoicon,
-            R.mipmap.narutoicon,
-            R.mipmap.narutoicon,
-            R.mipmap.narutoicon
-    };
+
+
+
 }
