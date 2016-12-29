@@ -62,12 +62,10 @@ public class ImageAdapter extends BaseAdapter {
             R.mipmap.narutoicon,
             R.mipmap.narutoicon,
             R.mipmap.narutoicon,
-            R.mipmap.narutoicon,R.mipmap.narutoicon,
+            R.mipmap.narutoicon,
+            R.mipmap.narutoicon,
             R.mipmap.narutoicon,
             R.mipmap.narutoicon,
             R.mipmap.narutoicon
-
-
-
     };
 }

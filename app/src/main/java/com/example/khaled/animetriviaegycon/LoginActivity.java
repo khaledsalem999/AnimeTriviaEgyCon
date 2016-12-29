@@ -3,6 +3,7 @@ package com.example.khaled.animetriviaegycon;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
@@ -20,6 +21,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -29,21 +31,42 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.auth.api.signin.GoogleSignInResult;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static android.Manifest.permission.READ_CONTACTS;
+import static com.firebase.ui.auth.ui.AcquireEmailHelper.RC_SIGN_IN;
 
 /**
  * A login screen that offers login via email/password.
  */
-public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<Cursor> {
 
-    /**
-     * Id to identity READ_CONTACTS permission request.
-     */
+public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<Cursor>, GoogleApiClient.OnConnectionFailedListener {
+    //For google authentication
+    GoogleSignInOptions gso;
+    GoogleApiClient mGoogleApiClient;
+
+    //for firebase general authentication
+    FirebaseAuth firebaseAuth;
+
+    //Read contact request
     private static final int REQUEST_READ_CONTACTS = 0;
+
+    //Progress Dialog for progress update
+    ProgressDialog progress;
 
     /**
      * A dummy authentication store containing known user names and passwords.
@@ -70,6 +93,18 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
         populateAutoComplete();
+        //Progress bar for info
+        progress= new ProgressDialog(this);
+
+        //Initiates the current firebase running instance
+        firebaseAuth = FirebaseAuth.getInstance();
+
+        //If user is already signed in, sign him out(for testing, will be changed.)
+        if(firebaseAuth.getCurrentUser()!=null){
+            //this.finish();
+            //startActivity(new Intent(LoginActivity.this, RulesActivity.class));
+            firebaseAuth.signOut();
+        }
 
         mPasswordView = (EditText) findViewById(R.id.password);
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -83,26 +118,86 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             }
         });
 
+        //Get the buttons in our form
         Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
         Button Signup = (Button) findViewById(R.id.register);
 
+        //The sign up button click listener
+        //Go to register activity
         Signup.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(LoginActivity.this,RegisterActivity.class));
                 finish();
+                startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
             }
         });
 
+        //The sign in click listener
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish();
+                //Start the progress dialogue..
+                progress.setMessage("Logging in, please wait...");
+                progress.show();
+
+                //Get email and password
+                String email = mEmailView.getText().toString().trim();
+                String pass = mPasswordView.getText().toString().trim();
+
+                //If mail empty, error
+                if(TextUtils.isEmpty(email)){
+                    progress.dismiss();
+                    Toast.makeText(LoginActivity.this, "Please enter your email.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                //If pass empty, error
+                if(TextUtils.isEmpty(pass)){
+                    progress.dismiss();
+                    Toast.makeText(LoginActivity.this, "Please enter your password.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                //Sign in through firebase and check if success or fail after completion
+                firebaseAuth.signInWithEmailAndPassword(email,pass).addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        progress.dismiss();
+                        if(task.isSuccessful()){
+                            LoginActivity.this.finish();
+                            startActivity(new Intent(LoginActivity.this, RulesActivity.class));
+                        }
+                        else if(task.isSuccessful()!=true){
+                            Toast.makeText(LoginActivity.this, "Username or password incorrect. Please, try again.", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+            }
+        });
+
+        findViewById(R.id.google_sign_in_button).setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                signIn();
             }
         });
 
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
+
+        gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .build();
+
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .enableAutoManage(this/*FragmentActivity*/, this/*OnConnectionFailedListener*/)
+                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
+                .build();
+    }
+
+    private void signIn() {
+        Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
+        startActivityForResult(signInIntent, RC_SIGN_IN);
     }
 
     private void populateAutoComplete() {
@@ -290,6 +385,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         mEmailView.setAdapter(adapter);
     }
 
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
+    }
+
 
     private interface ProfileQuery {
         String[] PROJECTION = {
@@ -357,5 +457,35 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             showProgress(false);
         }
     }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
+        if (requestCode == RC_SIGN_IN) {
+            GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
+            handleSignInResult(result);
+        }
+    }
+
+    private void handleSignInResult(GoogleSignInResult result) {
+        //Log.d(TAG, "handleSignInResult:" + result.isSuccess());
+
+        if (result.isSuccess()) {
+            // Signed in successfully, show authenticated UI.
+            GoogleSignInAccount acct = result.getSignInAccount();
+            //mStatusTextView.setText(getString(R.string.signed_in_fmt, acct.getDisplayName()));
+            //updateUI(true);
+            Toast.makeText(this, "Sign in successful.", Toast.LENGTH_SHORT).show();
+            this.finish();
+            startActivity(new Intent(LoginActivity.this, RulesActivity.class));
+        } else {
+            // Signed out, show unauthenticated UI.
+            //updateUI(false);
+            Toast.makeText(this, "Failed to sign in.", Toast.LENGTH_SHORT).show();
+        }
+    }
+
 }
 
