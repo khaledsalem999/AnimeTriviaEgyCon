@@ -4,30 +4,16 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/All_anime"
-            android:title="All" />
+            android:title="Animes Selection" />
         <item
-            android:id="@+id/nav_Action"
-            android:title="Action" />
+            android:id="@+id/nav_status"
+            android:title="Profile" />
         <item
-            android:id="@+id/nav_Drama"
-            android:title="Drama" />
+            android:id="@+id/nav_Leader"
+            android:title="Leaderboard" />
         <item
-            android:id="@+id/nav_Adventure"
-            android:title="Adventure" />
+            android:id="@+id/nav_logout"
+            android:title="Log Out ):" />
     </group>
-
-    <item android:title="Account">
-        <menu>
-            <item
-                android:id="@+id/nav_status"
-                android:title="Status" />
-            <item
-                android:id="@+id/nav_Leader"
-                android:title="Leaderboard" />
-            <item
-                android:id="@+id/nav_login"
-                android:title="Log In" />
-        </menu>
-    </item>
 
 </menu>

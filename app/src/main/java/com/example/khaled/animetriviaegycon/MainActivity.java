@@ -74,6 +74,7 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -97,7 +98,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
+        getMenuInflater().inflate(R.menu.toolbar_buttons, menu);
         return true;
     }
 
@@ -111,6 +112,10 @@ public class MainActivity extends AppCompatActivity
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
+        } else if (id == R.id.action_back){
+            fragmentManager.beginTransaction()
+                    .replace(R.id.frame, Gview)
+                    .commit();
         }
 
         return super.onOptionsItemSelected(item);
@@ -123,12 +128,9 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.All_anime) {
-            // Handle the camera action
-        } else if (id == R.id.nav_Action) {
-
-        } else if (id == R.id.nav_Adventure) {
-
-        } else if (id == R.id.nav_Drama) {
+            fragmentManager.beginTransaction()
+                    .replace(R.id.frame, Gview)
+                    .commit();
 
         } else if (id == R.id.nav_status) {
 
@@ -140,9 +142,8 @@ public class MainActivity extends AppCompatActivity
                     .replace(R.id.frame, Lactivity)
                     .commit();
 
+        } else if (id == R.id.nav_logout) {
 
-        } else if (id == R.id.nav_login){
-            startActivity(new Intent(MainActivity.this,LoginActivity.class));
         }
 
         TextView SignIn = (TextView) findViewById(R.id.Signin);
