@@ -101,9 +101,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         //If user is already signed in, sign him out(for testing, will be changed.)
         if(firebaseAuth.getCurrentUser()!=null){
-            //this.finish();
-            //startActivity(new Intent(LoginActivity.this, RulesActivity.class));
-            firebaseAuth.signOut();
+            Log.e("email logged in:",firebaseAuth.getCurrentUser().getEmail());
+            this.finish();
+            startActivity(new Intent(LoginActivity.this, RulesActivity.class));
         }
 
         mPasswordView = (EditText) findViewById(R.id.password);
