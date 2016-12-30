@@ -99,7 +99,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         //Initiates the current firebase running instance
         firebaseAuth = FirebaseAuth.getInstance();
 
-        //If user is already signed in, sign him out(for testing, will be changed.)
+        //If user is already signed in, continue to rules
         if(firebaseAuth.getCurrentUser()!=null){
             Log.e("email logged in:",firebaseAuth.getCurrentUser().getEmail());
             this.finish();
