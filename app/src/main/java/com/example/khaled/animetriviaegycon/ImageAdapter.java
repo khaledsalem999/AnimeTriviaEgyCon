@@ -1,6 +1,7 @@
 package com.example.khaled.animetriviaegycon;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -58,7 +59,8 @@ public class ImageAdapter extends BaseAdapter {
         if(ConvertView==null){
             ConvertView=mInflater.inflate(R.layout.grid_item,parent,false);
         }
-        AnimeViewHandler holder = new AnimeViewHandler(ConvertView);
+
+        final AnimeViewHandler holder = new AnimeViewHandler(ConvertView);
         holder.text.setText(anime.get(position).getname());
         PicassoClient.downloadImage(context, anime.get(position).geturl(), holder.img);
 

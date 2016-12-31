@@ -108,7 +108,7 @@ public class GridView extends Fragment {
                         NewAnime.seturl(dataSnapshot.getChildren().iterator().next().child("1").getValue().toString());
                         anime.add(NewAnime);
 
-                        //set grid view item
+                        //set grid view items
                         android.widget.GridView gridview = (android.widget.GridView) root.findViewById(R.id.gridview);
                         gridview.setAdapter( new ImageAdapter(getActivity(), anime) );
                     }
