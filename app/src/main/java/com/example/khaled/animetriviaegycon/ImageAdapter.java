@@ -82,14 +82,17 @@ public class ImageAdapter extends BaseAdapter {
 
         return ConvertView;
     }
-    public void onViewClicked(AnimeViewHandler viewHolder, int position){
+    public void onViewClicked(AnimeViewHandler viewHolder, Integer position){
         if (selectedPosition.contains(position)) {
+            Log.e("Removed position:", Integer.toString(position));
             adjustSelect(viewHolder.text, false);
-            selectedPosition.remove(position);
+            
+                selectedPosition.remove(position);
         }
         else {
             adjustSelect(viewHolder.text, true);
             selectedPosition.add(position);
+            Log.e("Added position:", Integer.toString(position));
         }
     }
 
