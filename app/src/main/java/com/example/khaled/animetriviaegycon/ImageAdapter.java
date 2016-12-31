@@ -86,6 +86,7 @@ public class ImageAdapter extends BaseAdapter {
         if (selectedPosition.contains(position)) {
             Log.e("Removed position:", Integer.toString(position));
             adjustSelect(viewHolder.text, false);
+            
                 selectedPosition.remove(position);
         }
         else {
