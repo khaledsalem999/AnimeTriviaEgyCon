@@ -47,7 +47,8 @@ public class ImageAdapter extends BaseAdapter {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        Log.e("Your current location:", Integer.toString(i));
+        Log.e("Your current location ", Integer.toString(i));
+        Log.e("Items size : ", String.valueOf(getItemId(i)));
         View v = view;
         ImageView picture;
         TextView name;
