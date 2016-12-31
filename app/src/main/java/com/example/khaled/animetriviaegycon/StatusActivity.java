@@ -12,11 +12,13 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TableRow;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -32,6 +34,10 @@ public class StatusActivity extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.content_status, container, false);
         // Inflate the layout for this fragment
+
+        TextView HSLable = (TextView) view.findViewById(R.id.HighScoreLable);
+
+        HSLable.startAnimation(AnimationUtils.loadAnimation(getActivity(),android.R.anim.slide_in_left));
 
         setHasOptionsMenu(true);
 
