@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
@@ -26,7 +27,7 @@ import java.util.List;
  * Created by Khaled on 12/8/2016.
  */
 public class ImageAdapter extends BaseAdapter {
-    private final List<Item> mItems = new ArrayList<Item>();
+    ArrayList<Integer> selectedPosition = new ArrayList<Integer>();
     private ArrayList<Anime> anime;
     private LayoutInflater mInflater;
     Context context;
@@ -52,22 +53,56 @@ public class ImageAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View ConvertView, ViewGroup parent) {
+    public View getView(final int position, View ConvertView, ViewGroup parent) {
+        final AnimeViewHandler holder;
+
         if (mInflater == null) {
             mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         }
         if(ConvertView==null){
             ConvertView=mInflater.inflate(R.layout.grid_item,parent,false);
         }
+            //holder = (AnimeViewHandler) ConvertView.getTag();
 
-        final AnimeViewHandler holder = new AnimeViewHandler(ConvertView);
+        holder = new AnimeViewHandler(ConvertView);
         holder.text.setText(anime.get(position).getname());
+        ConvertView.setTag(holder);
         PicassoClient.downloadImage(context, anime.get(position).geturl(), holder.img);
+        holder.text.setTag(position);
+        adjustSelect(holder.text,selectedPosition.contains(position));
+
+
+        ConvertView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onViewClicked(holder,position);
+
+            }
+        });
 
         return ConvertView;
     }
+    public void onViewClicked(AnimeViewHandler viewHolder, int position){
+        if (selectedPosition.contains(position)) {
+            adjustSelect(viewHolder.text, false);
+            selectedPosition.remove(position);
+        }
+        else {
+            adjustSelect(viewHolder.text, true);
+            selectedPosition.add(position);
+        }
+    }
 
-
+    public void adjustSelect(TextView text, boolean visible){
+        if(visible) {
+            text.setBackgroundColor(Color.parseColor("#304FFE"));
+            text.setTextColor(Color.parseColor("#000000"));
+        }
+        else {
+            text.setBackgroundColor(Color.parseColor("#55000000"));
+            text.setTextColor(Color.parseColor("#FFFFFF"));
+        }
+    }
 
 
 }

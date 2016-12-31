@@ -16,13 +16,6 @@ public class AnimeViewHandler {
     public AnimeViewHandler(View itemView){
         text = (TextView) itemView.findViewById(R.id.text);
         img= (ImageView) itemView.findViewById(R.id.picture);
-        
-        img.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                text.setBackgroundColor(Color.parseColor("#FF0000"));
-            }
-        });
     }
 
 }
