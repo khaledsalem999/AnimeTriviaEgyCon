@@ -8,22 +8,6 @@
     android:fitsSystemWindows="true"
     tools:context="com.example.khaled.animetriviaegycon.MainActivity">
 
-    <android.support.design.widget.AppBarLayout
-        app:showAsAction="ifRoom"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
-
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            app:showAsAction="ifRoom"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
-
-    </android.support.design.widget.AppBarLayout>
-
     <include layout="@layout/content_main" />
 
     <android.support.design.widget.FloatingActionButton
@@ -35,5 +19,21 @@
         android:id="@+id/floatingActionButton"
         app:layout_anchorGravity="center_vertical|center_horizontal"
         android:layout_gravity="bottom|right" />
+
+    <android.support.design.widget.AppBarLayout
+        app:showAsAction="ifRoom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            app:showAsAction="ifRoom"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="#491432"
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+    </android.support.design.widget.AppBarLayout>
 
 </android.support.design.widget.CoordinatorLayout>
