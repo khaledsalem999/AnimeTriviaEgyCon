@@ -48,19 +48,6 @@ public class MainActivity extends AppCompatActivity
                 .replace(R.id.frame, Gview)
                 .commit();
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.floatingActionButton);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                startActivity(new Intent(MainActivity.this,QuestionActivity.class));
-
-            }
-        });
-
-
-
-
         /*
         for(int i=0;i<10;i++){
             gridArray.add(new Item(homeIcon,"Naruto"));

@@ -1,8 +1,10 @@
 package com.example.khaled.animetriviaegycon;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.provider.ContactsContract;
+import android.support.design.widget.FloatingActionButton;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,10 +33,13 @@ public class ImageAdapter extends BaseAdapter {
     private ArrayList<Anime> anime;
     private LayoutInflater mInflater;
     Context context;
+    FloatingActionButton button;
+    View ParentView;
 
-    public ImageAdapter(Context context, ArrayList<Anime> anime) {
+    public ImageAdapter(Context context, ArrayList<Anime> anime, View gridView) {
         this.context=context;
         this.anime=anime;
+        ParentView=gridView;
     }
 
     @Override
@@ -58,6 +63,15 @@ public class ImageAdapter extends BaseAdapter {
 
         if (mInflater == null) {
             mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            button = (FloatingActionButton) ParentView.findViewById(R.id.floatingActionButton);
+            button.setImageResource(R.drawable.ic_menu_send);
+            button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    context.startActivity(new Intent(context, QuestionActivity.class));
+                }
+            });
         }
         if(ConvertView==null){
             ConvertView=mInflater.inflate(R.layout.grid_item,parent,false);
@@ -71,28 +85,29 @@ public class ImageAdapter extends BaseAdapter {
         holder.text.setTag(position);
         adjustSelect(holder.text,selectedPosition.contains(position));
 
-
         ConvertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 onViewClicked(holder,position);
-
             }
         });
 
+
         return ConvertView;
     }
+
     public void onViewClicked(AnimeViewHandler viewHolder, Integer position){
         if (selectedPosition.contains(position)) {
             Log.e("Removed position:", Integer.toString(position));
             adjustSelect(viewHolder.text, false);
-            
                 selectedPosition.remove(position);
+            checkButton(ParentView,context);
         }
         else {
             adjustSelect(viewHolder.text, true);
             selectedPosition.add(position);
             Log.e("Added position:", Integer.toString(position));
+            checkButton(ParentView,context);
         }
     }
 
@@ -104,6 +119,19 @@ public class ImageAdapter extends BaseAdapter {
         else {
             text.setBackgroundColor(Color.parseColor("#55000000"));
             text.setTextColor(Color.parseColor("#FFFFFF"));
+        }
+    }
+
+    public void checkButton(View view, Context c){
+        if(c!=null){
+            if(selectedPosition.size()>9){
+                Log.e("There is a button", button.toString());
+                button.setVisibility(ParentView.VISIBLE);
+            }
+            else if(selectedPosition.size()<10 && button!=null){
+                Log.e("Is there a button", button.toString());
+                button.setVisibility(ParentView.INVISIBLE);
+            }
         }
     }
 
