@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity
     ArrayList<Item> gridArray = new ArrayList<Item>();
     FragmentManager fragmentManager = getSupportFragmentManager();
     LeaderActivity Lactivity = new LeaderActivity();
+    StatusActivity Sactivity = new StatusActivity();
     com.example.khaled.animetriviaegycon.GridView Gview = new com.example.khaled.animetriviaegycon.GridView();
 
     @Override
@@ -134,7 +135,9 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_status) {
 
-            startActivity(new Intent(MainActivity.this,StatusActivity.class));
+            fragmentManager.beginTransaction()
+                    .replace(R.id.frame, Sactivity)
+                    .commit();
 
         } else if (id == R.id.nav_Leader) {
 

@@ -9,37 +9,158 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:background="@android:color/holo_purple"
+    android:background="#CE3199"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.example.khaled.animetriviaegycon.StatusActivity"
     tools:showIn="@layout/activity_status">
 
-    <android.support.design.widget.TabLayout
+    <FrameLayout
+        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        >
+        android:layout_above="@+id/textView2">
 
-        <android.support.design.widget.TabItem
+        <TableLayout
+            android:gravity="center"
+            android:layout_weight="1"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/tabItem"
-            android:text="Tab4" />
+            android:layout_height="match_parent">
 
-        <android.support.design.widget.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Left" />
+            <TableRow
+                android:gravity="center"
+                android:layout_weight="1"
+                android:id="@+id/Hscorerow"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
 
-        <android.support.design.widget.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Center" />
+                <TextView
+                    android:text="Highest Score"
+                    android:textSize="20dp"
+                    android:layout_width="fill_parent"
+                    android:id="@+id/HighScoreLable"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Button"
+                    android:layout_height="fill_parent" />
+            </TableRow>
 
-        <android.support.design.widget.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Right" />
-    </android.support.design.widget.TabLayout>
+            <TableRow
+                android:gravity="center"
+                android:layout_weight="1"
+                android:id="@+id/Fanime"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent" >
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:text="Favorite Anime"
+                    android:textSize="20dp"
+                    android:id="@+id/favanime"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Button" />
+            </TableRow>
+
+            <TableRow
+                android:gravity="center"
+                android:layout_weight="1"
+                android:id="@+id/Ranswers"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent" >
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:text="Right Answers"
+                    android:textSize="20dp"
+                    android:id="@+id/rightanslable"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Button" />
+            </TableRow>
+
+            <TableRow
+                android:gravity="center"
+                android:layout_weight="1"
+                android:id="@+id/RankingRow"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent" >
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:text="world place"
+                    android:textSize="20dp"
+
+                    android:id="@+id/leaderboardlable"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Button" />
+            </TableRow>
+        </TableLayout>
+    </FrameLayout>
+
+    <TableLayout
+        android:gravity="center"
+        android:layout_weight="1"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/textView2"
+        android:layout_alignParentRight="true">
+
+        <TableRow
+            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:text="5000"
+                android:textSize="20dp"
+                android:id="@+id/textView24"
+                android:textAppearance="@style/TextAppearance.AppCompat.Button" />
+        </TableRow>
+
+        <TableRow
+            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <TextView
+                android:text="NARUTO"
+                android:textSize="20dp"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:id="@+id/favanimename"
+                android:textAppearance="@style/TextAppearance.AppCompat.Button" />
+        </TableRow>
+
+        <TableRow
+            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <TextView
+                android:text="35"
+                android:textSize="20dp"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:id="@+id/rightans"
+                android:textAppearance="@style/TextAppearance.AppCompat.Button" />
+        </TableRow>
+
+        <TableRow
+            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <TextView
+                android:text="60"
+                android:textSize="20dp"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:id="@+id/worldplace"
+                android:textAppearance="@style/TextAppearance.AppCompat.Button" />
+        </TableRow>
+    </TableLayout>
 
     <RatingBar
         android:layout_width="wrap_content"
@@ -47,5 +168,19 @@
         android:id="@+id/ratingBar"
         android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true" />
+
+    <TextView
+        android:textAlignment="center"
+        android:textSize="20dp"
+        android:layout_width="match_parent"
+        android:layout_above="@+id/ratingBar"
+        android:id="@+id/textView2"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+        android:text="YOUR RATING" />
 
 </RelativeLayout>
