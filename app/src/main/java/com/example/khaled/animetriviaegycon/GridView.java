@@ -110,7 +110,7 @@ public class GridView extends Fragment {
 
                         //set grid view items
                         android.widget.GridView gridview = (android.widget.GridView) root.findViewById(R.id.gridview);
-                        gridview.setAdapter( new ImageAdapter(getActivity(), anime) );
+                        gridview.setAdapter( new ImageAdapter(getActivity(), anime, root) );
                     }
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
