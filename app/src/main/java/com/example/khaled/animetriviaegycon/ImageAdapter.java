@@ -1,6 +1,7 @@
 package com.example.khaled.animetriviaegycon;
 
 import android.content.Context;
+import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,12 @@ import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.TextView;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,65 +26,43 @@ import java.util.List;
  */
 public class ImageAdapter extends BaseAdapter {
     private final List<Item> mItems = new ArrayList<Item>();
-    private final LayoutInflater mInflater;
+    private ArrayList<Anime> anime;
+    private LayoutInflater mInflater;
+    Context context;
 
-    public ImageAdapter(Context context) {
-        mInflater = LayoutInflater.from(context);
-
-        for(int x = 0;x<5;x++) {
-            mItems.add(new Item("Naruto", R.mipmap.naruto));
-            mItems.add(new Item("Bleach", R.mipmap.bleach));
-        }
+    public ImageAdapter(Context context, ArrayList<Anime> anime) {
+        this.context=context;
+        this.anime=anime;
     }
 
     @Override
     public int getCount() {
-        return mItems.size();
+        return anime.size();
     }
 
     @Override
-    public Item getItem(int i) {
-        return mItems.get(i);
+    public Object getItem(int i) {
+        return anime.get(i);
     }
 
     @Override
     public long getItemId(int i) {
-        return mItems.get(i).drawableId;
+        return i;
     }
 
     @Override
-    public View getView(int i, View view, ViewGroup viewGroup) {
-        Log.e("Your current location ", Integer.toString(i));
-        Log.e("Items ID : ", String.valueOf(getItemId(i)));
-        View v = view;
-        ImageView picture;
-        TextView name;
-
-        if (v == null) {
-            v = mInflater.inflate(R.layout.grid_item, viewGroup, false);
-            v.setTag(R.id.picture, v.findViewById(R.id.picture));
-            v.setTag(R.id.text, v.findViewById(R.id.text));
+    public View getView(int position, View ConvertView, ViewGroup parent) {
+        if (mInflater == null) {
+            mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         }
-
-        picture = (ImageView) v.getTag(R.id.picture);
-        name = (TextView) v.getTag(R.id.text);
-
-        Item item = getItem(i);
-
-        picture.setImageResource(item.drawableId);
-        name.setText(item.name);
-
-        return v;
-    }
-
-    private static class Item {
-        public final String name;
-        public final int drawableId;
-
-        Item(String name, int drawableId) {
-            this.name = name;
-            this.drawableId = drawableId;
+        if(ConvertView==null){
+            ConvertView=mInflater.inflate(R.layout.grid_item,parent,false);
         }
+        AnimeViewHandler holder = new AnimeViewHandler(ConvertView);
+        holder.text.setText(anime.get(position).getname());
+        PicassoClient.downloadImage(context, anime.get(position).geturl(), holder.img);
+
+        return ConvertView;
     }
 
 

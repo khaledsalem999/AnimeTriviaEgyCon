@@ -3,14 +3,35 @@ package com.example.khaled.animetriviaegycon;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.GridLayout;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.Toast;
+
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+
+import static com.example.khaled.animetriviaegycon.R.id.imageView;
 
 
 /**
@@ -46,6 +67,11 @@ public class GridView extends Fragment {
      * @return A new instance of fragment GridView.
      */
     // TODO: Rename and change types and number of parameters
+    View root;
+    GridLayout layout;
+    ArrayList<Anime> anime= new ArrayList<Anime>();
+    DatabaseReference ref = FirebaseDatabase.getInstance().getReference("anime");
+
     public static GridView newInstance(String param1, String param2) {
         GridView fragment = new GridView();
         Bundle args = new Bundle();
@@ -62,23 +88,43 @@ public class GridView extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        //Fill our array list.
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        root = inflater.inflate(R.layout.fragment_grid_view, container , false);
 
-        View view = inflater.inflate(R.layout.fragment_grid_view, container, false);
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+        @Override
+        public void onDataChange(DataSnapshot dataSnapshot) {
+            int count=(int) dataSnapshot.getChildrenCount();
+            for(int x = 0;x<count;x++) {
+                ref.orderByKey().equalTo(Integer.toString(x)).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        Anime NewAnime =new Anime();
+                        NewAnime.setname(dataSnapshot.getChildren().iterator().next().child("0").getValue().toString());
+                        NewAnime.seturl(dataSnapshot.getChildren().iterator().next().child("1").getValue().toString());
+                        anime.add(NewAnime);
 
-        //set grid view item
-        Bitmap homeIcon = BitmapFactory.decodeResource(this.getResources(), R.mipmap.naruto);
-        Bitmap userIcon = BitmapFactory.decodeResource(this.getResources(), R.mipmap.bleach);
+                        //set grid view item
+                        android.widget.GridView gridview = (android.widget.GridView) root.findViewById(R.id.gridview);
+                        gridview.setAdapter( new ImageAdapter(getActivity(), anime) );
+                    }
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                    }
+                });
+            }
+    }
 
-        android.widget.GridView gridview = (android.widget.GridView) view.findViewById(R.id.gridview);
-        gridview.setAdapter(new ImageAdapter(getActivity()));
+    @Override
+    public void onCancelled(DatabaseError databaseError) {
 
-        return view;
+    }
+});
+        return root;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
