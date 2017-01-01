@@ -9,7 +9,9 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:background="#CE3199"
+    android:background="#4A142E"
+    android:screenOrientation="portrait"
+    android:configChanges="orientation|keyboardHidden"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.example.khaled.animetriviaegycon.QuestionActivity"
     tools:showIn="@layout/activity_question">
@@ -21,14 +23,19 @@
         android:layout_height="match_parent"
         android:weightSum="1">
 
-        <ProgressBar
-            style="?android:attr/progressBarStyleLarge"
+
+        <TextView
+            android:textColor="#ffffff"
+            android:text="10"
+            android:paddingBottom="5dp"
+            android:textAlignment="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingBottom="10dp"
-            android:id="@+id/progressBar16" />
+            android:id="@+id/Timer"
+            android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
 
         <ImageView
+            android:layout_marginBottom="5dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/back"
@@ -37,28 +44,39 @@
             android:layout_weight="0.79" />
 
         <TextView
+            android:textColor="#ffffff"
             android:text="-"
             android:background="@drawable/back"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/question"
             android:layout_weight="0.10"
-            android:padding="7dp"
+            android:padding="10dp"
             android:textAppearance="@style/TextAppearance.AppCompat.Button" />
 
         <Button
+            android:background="#7E2856"
+            android:textColor="#ffffff"
+            android:layout_marginTop="10dp"
             android:text="-"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/ans1" />
+            android:id="@+id/ans1"
+            />
 
         <Button
+            android:background="#7E2856"
+            android:textColor="#ffffff"
+            android:layout_marginTop="10dp"
             android:text="-"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/ans2" />
 
         <Button
+            android:background="#7E2856"
+            android:textColor="#ffffff"
+            android:layout_marginTop="10dp"
             android:text="-"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
