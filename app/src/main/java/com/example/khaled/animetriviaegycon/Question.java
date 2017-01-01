@@ -1,10 +1,12 @@
 package com.example.khaled.animetriviaegycon;
 
+import java.io.Serializable;
+
 /**
  * Created by hyhae on 1/1/2017.
  */
 
-public class Question {
+public class Question implements Serializable {
     private String anime;
     private String question;
     private String correctAns;

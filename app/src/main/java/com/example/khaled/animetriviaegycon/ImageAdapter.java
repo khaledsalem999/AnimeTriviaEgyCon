@@ -30,11 +30,15 @@ import java.util.List;
  */
 public class ImageAdapter extends BaseAdapter {
     ArrayList<Integer> selectedPosition = new ArrayList<Integer>();
+    ArrayList<String> selectedAnime = new ArrayList<String>();
+    ArrayList<Question> questionList = new ArrayList<Question>();
     private ArrayList<Anime> anime;
     private LayoutInflater mInflater;
     Context context;
     FloatingActionButton button;
     View ParentView;
+    ArrayList<String>testArray= new ArrayList<String>();
+    //long countPrev;
 
     public ImageAdapter(Context context, ArrayList<Anime> anime, View gridView) {
         this.context=context;
@@ -68,12 +72,42 @@ public class ImageAdapter extends BaseAdapter {
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent quiz = new Intent(context, QuestionActivity.class);
-                    int counter=0;
-                    quiz.putExtra("SelectedList",selectedPosition);
-                    quiz.putExtra("Counter", counter);
-                    quiz.putExtra("AnimeList",anime);
-                    context.startActivity(quiz);
+
+                    DatabaseReference ref= FirebaseDatabase.getInstance().getReference("questions");
+                    for(int i=0; i<20; i++){
+                        final int finalI = i;
+                        ref.orderByChild("0").equalTo(selectedAnime.get(i)).addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                String test2= dataSnapshot.getChildren().iterator().next().getKey().toString();
+
+                                int index = (int) (Integer.parseInt(test2) + Math.random()*dataSnapshot.getChildrenCount());
+
+                                String questionText = dataSnapshot.child(Integer.toString(index)).child("2").getValue().toString();
+                                String ans1 = dataSnapshot.child(Integer.toString(index)).child("3").getValue().toString();
+                                String ans2 = dataSnapshot.child(Integer.toString(index)).child("4").getValue().toString();
+                                String ans3 = dataSnapshot.child(Integer.toString(index)).child("5").getValue().toString();
+                                String name = dataSnapshot.child(Integer.toString(index)).child("0").getValue().toString();
+                                String url = "";
+
+                                Question newQuestion = new Question(name, questionText,ans1,ans2,ans3,url);
+                                questionList.add(newQuestion);
+
+                                if(questionList.size()==20){
+                                    Intent quiz = new Intent(context, QuestionActivity.class);
+                                    int counter=0;
+                                    quiz.putExtra("Counter", counter);
+                                    quiz.putExtra("Questions", questionList);
+                                    context.startActivity(quiz);
+                                }
+
+                                //dataSnapshot.child(Integer.toString(index)).getChildren().iterator().next().child("2").getValue().toString()
+                            }
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+                            }
+                        });
+                    }
                 }
             });
         }
@@ -103,12 +137,16 @@ public class ImageAdapter extends BaseAdapter {
     public void onViewClicked(AnimeViewHandler viewHolder, Integer position){
         if (selectedPosition.contains(position)) {
             adjustSelect(viewHolder.text, false);
-                selectedPosition.remove(position);
+            selectedPosition.remove(position);
+            selectedAnime.remove(anime.get(position).getname());
+            selectedAnime.remove(anime.get(position).getname());
             checkButton(ParentView,context);
         }
         else if(selectedPosition.contains(position)==false  && selectedPosition.size()<10) {
             adjustSelect(viewHolder.text, true);
             selectedPosition.add(position);
+            selectedAnime.add(anime.get(position).getname());
+            selectedAnime.add(anime.get(position).getname());
             checkButton(ParentView,context);
         }
     }
