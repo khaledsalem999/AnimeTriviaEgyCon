@@ -37,8 +37,7 @@ public class ImageAdapter extends BaseAdapter {
     Context context;
     FloatingActionButton button;
     View ParentView;
-    ArrayList<String>testArray= new ArrayList<String>();
-    //long countPrev;
+
 
     public ImageAdapter(Context context, ArrayList<Anime> anime, View gridView) {
         this.context=context;

@@ -13,6 +13,7 @@ public class Question implements Serializable {
     private String secAns;
     private String thirdAns;
     private String picUrl;
+    private int Score;
 
     public Question(String anime, String question, String correctAns, String secAns, String thirdAns, String picUrl) {
         this.anime = anime;
@@ -70,4 +71,8 @@ public class Question implements Serializable {
     public void setPicUrl(String picUrl) {
         this.picUrl = picUrl;
     }
+
+    public int getScore() {return Score;}
+
+    public void setScore(int score) {Score = score;}
 }
