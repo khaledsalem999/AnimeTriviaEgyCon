@@ -9,87 +9,148 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:background="#CE3199"
+    android:background="#4A142E"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.example.khaled.animetriviaegycon.ResultsActivity"
     tools:showIn="@layout/activity_results">
 
-    <TextView
-        android:text="Your Score"
-        android:textSize="25sp"
-        android:textAlignment="center"
+    <FrameLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/RatinglableResults">
+
+        <TableLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+
+            <TableRow
+                android:gravity="center"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <TextView
+                    android:textColor="#FFFFFF"
+                    android:text="Your Score"
+                    android:textSize="20dp"
+                    android:layout_width="fill_parent"
+                    android:id="@+id/HighScoreLableResults"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Button"
+                    android:layout_height="fill_parent" />
+            </TableRow>
+
+            <TableRow
+                android:gravity="center"
+                android:layout_weight="1"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent" >
+
+                <TextView
+                    android:textColor="#FFFFFF"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:text="Right Answers"
+                    android:textSize="20dp"
+                    android:id="@+id/rightanslableResults"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Button" />
+            </TableRow>
+
+            <TableRow
+                android:gravity="center"
+                android:layout_weight="1"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent" >
+
+                <TextView
+                    android:textColor="#FFFFFF"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:text="Ranking"
+                    android:textSize="20dp"
+                    android:id="@+id/leaderboardlableResults"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Button" />
+            </TableRow>
+        </TableLayout>
+    </FrameLayout>
+
+    <TableLayout
+        android:gravity="center"
+        android:layout_weight="1"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/RatinglableResults"
+        android:layout_alignParentRight="true">
+
+        <TableRow
+            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <TextView
+                android:textColor="#FFFFFF"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:text="5000"
+                android:textSize="20dp"
+                android:id="@+id/personalscoreResults"
+                android:textAppearance="@style/TextAppearance.AppCompat.Button" />
+        </TableRow>
+
+
+        <TableRow
+            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <TextView
+                android:textColor="#FFFFFF"
+                android:text="35"
+                android:textSize="20dp"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:id="@+id/rightansResults"
+                android:textAppearance="@style/TextAppearance.AppCompat.Button" />
+        </TableRow>
+
+        <TableRow
+            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <TextView
+                android:textColor="#FFFFFF"
+                android:text="60"
+                android:textSize="20dp"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:id="@+id/worldplaceResults"
+                android:textAppearance="@style/TextAppearance.AppCompat.Button" />
+        </TableRow>
+    </TableLayout>
+
+    <RatingBar
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:id="@+id/Score"
+        android:id="@+id/ratingBarResults"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true" />
+
+    <TextView
+        android:textColor="#FFFFFF"
+        android:textAlignment="center"
+        android:textSize="20dp"
+        android:layout_width="match_parent"
+        android:id="@+id/RatinglableResults"
+        android:layout_height="wrap_content"
         android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
-
-    <TextView
-        android:text="123"
-        android:textSize="25sp"
-        android:textAlignment="center"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textView8"
+        android:text="YOUR RATING"
+        android:layout_above="@+id/ratingBarResults"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:id="@+id/ScoreNum"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentStart="true" />
 
-
-    <TextView
-        android:text=">Number of right answers "
-        android:paddingTop="15sp"
-        android:textSize="20sp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textView11"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:id="@+id/textView12"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
-
-    <TextView
-        android:text="115"
-        android:textSize="20sp"
-        android:textAlignment="center"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textView12"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:id="@+id/textView13"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
-
-    <TextView
-        android:text=">Number of wrong answers "
-        android:paddingTop="15sp"
-        android:textSize="20sp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textView13"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:id="@+id/textView14"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
-
-    <TextView
-        android:text="256"
-        android:textSize="20sp"
-        android:textAlignment="center"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textView14"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:id="@+id/textView15"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
 
 </RelativeLayout>

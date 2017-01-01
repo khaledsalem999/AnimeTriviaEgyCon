@@ -9,7 +9,7 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.example.khaled.animetriviaegycon.MainActivity"
     tools:showIn="@layout/app_bar_main"
-    android:background="#CE3199"
+    android:background="#4A142E"
     android:baselineAligned="false">
 
     <FrameLayout
