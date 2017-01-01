@@ -93,6 +93,7 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
                 }
                 else{
                     Intent result = new Intent(QuestionActivity.this, ResultsActivity.class);
+                    result.putExtra("Questions",questionList);
                     finish();
                     Qtimer.cancel();
                     QuestionActivity.this.startActivity(result);
@@ -112,15 +113,32 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
         switch(id){
             case R.id.ans1:
             {
-                if(questionList.get(counter).getCorrectAns().contains(b.getText()))
-                    break;
+                if(questionList.get(counter).getCorrectAns().substring(1).equals(b.getText())){
+                    questionList.get(counter).setScore(1);
+                }
+                else{
+                    questionList.get(counter).setScore(0);
+                }
+                break;
             }
             case R.id.ans2:
             {
+                if(questionList.get(counter).getCorrectAns().substring(1).equals(b.getText())){
+                    questionList.get(counter).setScore(1);
+                }
+                else{
+                    questionList.get(counter).setScore(0);
+                }
                 break;
             }
             case R.id.ans3:
             {
+                if(questionList.get(counter).getCorrectAns().substring(1).equals(b.getText())){
+                    questionList.get(counter).setScore(1);
+                }
+                else{
+                    questionList.get(counter).setScore(0);
+                }
                 break;
             }
 
@@ -137,6 +155,7 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
         }
         else{
             Intent result = new Intent(QuestionActivity.this, ResultsActivity.class);
+            result.putExtra("Questions",questionList);
             finish();
             Qtimer.cancel();
             QuestionActivity.this.startActivity(result);
