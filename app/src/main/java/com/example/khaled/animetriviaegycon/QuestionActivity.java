@@ -25,7 +25,7 @@ import org.w3c.dom.Text;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
-public class QuestionActivity extends AppCompatActivity{
+public class QuestionActivity extends AppCompatActivity implements View.OnClickListener{
     DatabaseReference ref = FirebaseDatabase.getInstance().getReference("questions");
     int counter;
     ArrayList<Question> questionList;
@@ -40,23 +40,39 @@ public class QuestionActivity extends AppCompatActivity{
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        final TextView TimerLable = (TextView) findViewById(R.id.Timer);
         questionList = (ArrayList<Question>) getIntent().getSerializableExtra("Questions");
         counter = getIntent().getIntExtra("Counter",0);
         Log.e("Question", Integer.toString(counter));
 
+
+
         final TextView question = (TextView) findViewById(R.id.question);
-        final Button ans1 = (Button) findViewById(R.id.ans1);
-        final Button ans2 = (Button) findViewById(R.id.ans2);
-        final Button ans3 = (Button) findViewById(R.id.ans3);
+
+        Button buttons[] = new Button[3];
+        buttons[0] = (Button) findViewById(R.id.ans1);
+        buttons[1] = (Button) findViewById(R.id.ans2);
+        buttons[2] = (Button) findViewById(R.id.ans3);
+
+        String answer[]= new String[3];
+        answer[0]=questionList.get(counter).getCorrectAns().substring(1);
+        answer[1]=questionList.get(counter).getSecAns();
+        answer[2]=questionList.get(counter).getThirdAns();
 
         question.setText(questionList.get(counter).getQuestion());
-        ans1.setText(questionList.get(counter).getCorrectAns());
-        ans2.setText(questionList.get(counter).getSecAns());
-        ans3.setText(questionList.get(counter).getThirdAns());
 
+        int x = (int) (Math.random()*3);
+        buttons[0].setText(answer[x]);
+        x=(x+1)%3;
+        buttons[2].setText(answer[x]);
+        x=(x+1)%3;
+        buttons[1].setText(answer[x]);
 
-        //2l timer 2ho
+        buttons[0].setOnClickListener(this);
+        buttons[1].setOnClickListener(this);
+        buttons[2].setOnClickListener(this);
+
+        //Timer shit
+        final TextView TimerLable = (TextView) findViewById(R.id.Timer);
         Qtimer = new CountDownTimer(10 * 1000,1000) {
             @Override
             public void onTick(long millisUntilFinished) {
@@ -79,28 +95,51 @@ public class QuestionActivity extends AppCompatActivity{
                 }
             }
         };
-
-        ans1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(counter<19){
-                    counter++;
-                    Intent quiz = new Intent(QuestionActivity.this, QuestionActivity.class);
-                    quiz.putExtra("Counter", counter);
-                    quiz.putExtra("Questions",questionList);
-                    QuestionActivity.this.startActivity(quiz);
-                }
-                else{
-                    Intent result = new Intent(QuestionActivity.this, ResultsActivity.class);
-                    QuestionActivity.this.startActivity(result);
-                }
-            }
-        });
-        //ans2.setOnClickListener();
-        //ans3.setOnClickListener();
-
-
-        //bybtde hena
         Qtimer.start();
+
     }
+
+    @Override
+    public void onClick(View view) {
+        Button b = (Button) view;
+
+        int id= b.getId();
+
+        switch(id){
+            case R.id.ans1:
+            {
+                if(questionList.get(counter).getCorrectAns().contains(b.getText()))
+                    break;
+            }
+            case R.id.ans2:
+            {
+                break;
+            }
+            case R.id.ans3:
+            {
+                break;
+            }
+
+        }
+
+        if(counter<19){
+            counter++;
+            Intent quiz = new Intent(QuestionActivity.this, QuestionActivity.class);
+            quiz.putExtra("Counter", counter);
+            quiz.putExtra("Questions",questionList);
+            QuestionActivity.this.startActivity(quiz);
+        }
+        else{
+            finish();
+            Intent result = new Intent(QuestionActivity.this, ResultsActivity.class);
+            QuestionActivity.this.startActivity(result);
+        }
+    }
+
+
+
+    @Override
+    public void onBackPressed() {
+    }
+
 }
