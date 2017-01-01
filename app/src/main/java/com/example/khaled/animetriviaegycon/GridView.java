@@ -69,7 +69,7 @@ public class GridView extends Fragment {
     // TODO: Rename and change types and number of parameters
     View root;
     GridLayout layout;
-    ArrayList<Anime> anime= new ArrayList<Anime>();
+    ArrayList<Anime> anime;
     DatabaseReference ref = FirebaseDatabase.getInstance().getReference("anime");
 
     public static GridView newInstance(String param1, String param2) {
@@ -94,7 +94,7 @@ public class GridView extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         root = inflater.inflate(R.layout.fragment_grid_view, container , false);
-
+        anime= new ArrayList<Anime>();
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
         @Override
         public void onDataChange(DataSnapshot dataSnapshot) {
