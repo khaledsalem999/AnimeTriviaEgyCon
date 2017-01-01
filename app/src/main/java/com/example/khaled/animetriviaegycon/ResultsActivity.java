@@ -10,7 +10,12 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+
 public class ResultsActivity extends AppCompatActivity {
+ArrayList<Question> questionList;
+int score=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,6 +23,14 @@ public class ResultsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_results);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        questionList = (ArrayList<Question>) getIntent().getSerializableExtra("Questions");
+
+        for (int i=0; i<questionList.size();i++){
+            if(questionList.get(i).getScore()==1){
+                score+=1;
+            }
+        }
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.BackToAnimes);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -34,6 +47,7 @@ public class ResultsActivity extends AppCompatActivity {
         final TextView personalscores = (TextView) findViewById(R.id.personalscoreResults);
         final TextView rans = (TextView) findViewById(R.id.rightansResults);
         final TextView rank = (TextView) findViewById(R.id.worldplaceResults);
+        rans.setText(Integer.toString(score));
 
         //Animation Declaration
         Animation animation1 = AnimationUtils.loadAnimation(ResultsActivity.this,android.R.anim.slide_in_left);
@@ -64,7 +78,6 @@ public class ResultsActivity extends AppCompatActivity {
         personalscores.startAnimation(animation5);
         rans.startAnimation(animation7);
         rank.startAnimation(animation8);
-
 
     }
 
