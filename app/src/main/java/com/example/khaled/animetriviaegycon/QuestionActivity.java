@@ -87,10 +87,14 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
                     Intent quiz = new Intent(QuestionActivity.this, QuestionActivity.class);
                     quiz.putExtra("Counter", counter);
                     quiz.putExtra("Questions",questionList);
+                    finish();
+                    Qtimer.cancel();
                     QuestionActivity.this.startActivity(quiz);
                 }
                 else{
                     Intent result = new Intent(QuestionActivity.this, ResultsActivity.class);
+                    finish();
+                    Qtimer.cancel();
                     QuestionActivity.this.startActivity(result);
                 }
             }
@@ -127,11 +131,14 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
             Intent quiz = new Intent(QuestionActivity.this, QuestionActivity.class);
             quiz.putExtra("Counter", counter);
             quiz.putExtra("Questions",questionList);
+            finish();
+            Qtimer.cancel();
             QuestionActivity.this.startActivity(quiz);
         }
         else{
-            finish();
             Intent result = new Intent(QuestionActivity.this, ResultsActivity.class);
+            finish();
+            Qtimer.cancel();
             QuestionActivity.this.startActivity(result);
         }
     }
