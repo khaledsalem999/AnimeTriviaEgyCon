@@ -2,6 +2,7 @@ package com.example.khaled.animetriviaegycon;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.annotation.IntegerRes;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -24,11 +25,13 @@ import org.w3c.dom.Text;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
-public class QuestionActivity extends AppCompatActivity implements View.OnClickListener{
+public class QuestionActivity extends AppCompatActivity{
     DatabaseReference ref = FirebaseDatabase.getInstance().getReference("questions");
     int counter;
     ArrayList<Question> questionList;
     ArrayList<String> answer;
+    private CountDownTimer Qtimer;
+    long TimeInSec;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +40,7 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        final TextView TimerLable = (TextView) findViewById(R.id.Timer);
         questionList = (ArrayList<Question>) getIntent().getSerializableExtra("Questions");
         counter = getIntent().getIntExtra("Counter",0);
         Log.e("Question", Integer.toString(counter));
@@ -51,31 +55,52 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
         ans2.setText(questionList.get(counter).getSecAns());
         ans3.setText(questionList.get(counter).getThirdAns());
 
-        ans1.setOnClickListener(this);
-        ans2.setOnClickListener(this);
-        ans3.setOnClickListener(this);
 
-    }
+        //2l timer 2ho
+        Qtimer = new CountDownTimer(10 * 1000,1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                TimerLable.setText("" + millisUntilFinished/1000);
+                TimeInSec = millisUntilFinished/1000;
+            }
 
-    @Override
-    public void onClick(View view) {
-        int id= view.getId();
+            @Override
+            public void onFinish() {
+                if(counter<19){
+                    counter++;
+                    Intent quiz = new Intent(QuestionActivity.this, QuestionActivity.class);
+                    quiz.putExtra("Counter", counter);
+                    quiz.putExtra("Questions",questionList);
+                    QuestionActivity.this.startActivity(quiz);
+                }
+                else{
+                    Intent result = new Intent(QuestionActivity.this, ResultsActivity.class);
+                    QuestionActivity.this.startActivity(result);
+                }
+            }
+        };
 
-        switch(id){
+        ans1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(counter<19){
+                    counter++;
+                    Intent quiz = new Intent(QuestionActivity.this, QuestionActivity.class);
+                    quiz.putExtra("Counter", counter);
+                    quiz.putExtra("Questions",questionList);
+                    QuestionActivity.this.startActivity(quiz);
+                }
+                else{
+                    Intent result = new Intent(QuestionActivity.this, ResultsActivity.class);
+                    QuestionActivity.this.startActivity(result);
+                }
+            }
+        });
+        //ans2.setOnClickListener();
+        //ans3.setOnClickListener();
 
-        }
 
-        if(counter<19){
-            counter++;
-            Intent quiz = new Intent(QuestionActivity.this, QuestionActivity.class);
-            quiz.putExtra("Counter", counter);
-            quiz.putExtra("Questions",questionList);
-            QuestionActivity.this.startActivity(quiz);
-        }
-        else{
-            finish();
-            Intent result = new Intent(QuestionActivity.this, ResultsActivity.class);
-            QuestionActivity.this.startActivity(result);
-        }
+        //bybtde hena
+        Qtimer.start();
     }
 }
