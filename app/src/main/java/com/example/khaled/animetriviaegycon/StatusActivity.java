@@ -77,7 +77,7 @@ public class StatusActivity extends Fragment {
         animation7.setStartOffset(400);
         animation8.setStartOffset(600);
 
-        //Animation starto
+        //Animation start
         HSLable.startAnimation(animation1);
         Fanimes.startAnimation(animation2);
         rightanslables.startAnimation(animation3);
