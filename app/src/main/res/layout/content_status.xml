@@ -84,9 +84,8 @@
                 <TextView
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
-                    android:text="world place"
+                    android:text="Ranking"
                     android:textSize="20dp"
-
                     android:id="@+id/leaderboardlable"
                     android:textAppearance="@style/TextAppearance.AppCompat.Button" />
             </TableRow>
@@ -112,7 +111,7 @@
                 android:layout_height="fill_parent"
                 android:text="5000"
                 android:textSize="20dp"
-                android:id="@+id/textView24"
+                android:id="@+id/personalscore"
                 android:textAppearance="@style/TextAppearance.AppCompat.Button" />
         </TableRow>
 

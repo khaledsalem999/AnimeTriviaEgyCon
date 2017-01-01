@@ -12,7 +12,10 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
 import android.view.animation.AnimationUtils;
+import android.view.animation.TranslateAnimation;
 import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
@@ -22,6 +25,8 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import static android.R.attr.animation;
+
 public class StatusActivity extends Fragment {
 
     public StatusActivity() {
@@ -29,15 +34,59 @@ public class StatusActivity extends Fragment {
 
     private View view;
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.content_status, container, false);
-        // Inflate the layout for this fragment
 
-        TextView HSLable = (TextView) view.findViewById(R.id.HighScoreLable);
+        final TextView HSLable = (TextView) view.findViewById(R.id.HighScoreLable);
+        final TextView Fanimes = (TextView) view.findViewById(R.id.favanime);
+        final TextView rightanslables = (TextView) view.findViewById(R.id.rightanslable);
+        final TextView leaderboardlables = (TextView) view.findViewById(R.id.leaderboardlable);
+        final TextView personalscores = (TextView) view.findViewById(R.id.personalscore);
+        final TextView fanimu = (TextView) view.findViewById(R.id.favanimename);
+        final TextView rans = (TextView) view.findViewById(R.id.rightans);
+        final TextView rank = (TextView) view.findViewById(R.id.worldplace);
 
-        HSLable.startAnimation(AnimationUtils.loadAnimation(getActivity(),android.R.anim.slide_in_left));
+        //Animation Declaration
+        Animation animation1 = AnimationUtils.loadAnimation(getActivity(),android.R.anim.slide_in_left);
+        Animation animation2 = AnimationUtils.loadAnimation(getActivity(),android.R.anim.slide_in_left);
+        Animation animation3 = AnimationUtils.loadAnimation(getActivity(),android.R.anim.slide_in_left);
+        Animation animation4 = AnimationUtils.loadAnimation(getActivity(),android.R.anim.slide_in_left);
+        Animation animation5 = AnimationUtils.loadAnimation(getActivity(),android.R.anim.fade_in);
+        Animation animation6 = AnimationUtils.loadAnimation(getActivity(),android.R.anim.fade_in);
+        Animation animation7 = AnimationUtils.loadAnimation(getActivity(),android.R.anim.fade_in);
+        Animation animation8 = AnimationUtils.loadAnimation(getActivity(),android.R.anim.fade_in);
+
+        //Animation Duration
+        animation1.setDuration(200);
+        animation2.setDuration(200);
+        animation3.setDuration(200);
+        animation4.setDuration(200);
+        animation5.setDuration(200);
+        animation6.setDuration(200);
+        animation7.setDuration(200);
+        animation8.setDuration(200);
+
+        //Animation when to start
+        animation2.setStartOffset(200);
+        animation3.setStartOffset(400);
+        animation4.setStartOffset(600);
+        animation6.setStartOffset(200);
+        animation7.setStartOffset(400);
+        animation8.setStartOffset(600);
+
+        //Animation starto
+        HSLable.startAnimation(animation1);
+        Fanimes.startAnimation(animation2);
+        rightanslables.startAnimation(animation3);
+        leaderboardlables.startAnimation(animation4);
+        personalscores.startAnimation(animation5);
+        fanimu.startAnimation(animation6);
+        rans.startAnimation(animation7);
+        rank.startAnimation(animation8);
+
 
         setHasOptionsMenu(true);
 
@@ -52,7 +101,6 @@ public class StatusActivity extends Fragment {
 
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         menu.clear();
-        inflater.inflate(R.menu.main, menu);
         return;
     }
 
