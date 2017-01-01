@@ -68,8 +68,12 @@ public class ImageAdapter extends BaseAdapter {
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
-                    context.startActivity(new Intent(context, QuestionActivity.class));
+                    Intent quiz = new Intent(context, QuestionActivity.class);
+                    int counter=0;
+                    quiz.putExtra("SelectedList",selectedPosition);
+                    quiz.putExtra("Counter", counter);
+                    quiz.putExtra("AnimeList",anime);
+                    context.startActivity(quiz);
                 }
             });
         }
