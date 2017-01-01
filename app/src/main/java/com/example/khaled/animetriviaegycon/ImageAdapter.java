@@ -98,7 +98,6 @@ public class ImageAdapter extends BaseAdapter {
 
     public void onViewClicked(AnimeViewHandler viewHolder, Integer position){
         if (selectedPosition.contains(position)) {
-            Log.e("Removed position:", Integer.toString(position));
             adjustSelect(viewHolder.text, false);
                 selectedPosition.remove(position);
             checkButton(ParentView,context);
@@ -106,7 +105,6 @@ public class ImageAdapter extends BaseAdapter {
         else if(selectedPosition.contains(position)==false  && selectedPosition.size()<10) {
             adjustSelect(viewHolder.text, true);
             selectedPosition.add(position);
-            Log.e("Added position:", Integer.toString(position));
             checkButton(ParentView,context);
         }
     }
@@ -125,11 +123,9 @@ public class ImageAdapter extends BaseAdapter {
     public void checkButton(View view, Context c){
         if(c!=null){
             if(selectedPosition.size()>9){
-                Log.e("There is a button", button.toString());
                 button.setVisibility(ParentView.VISIBLE);
             }
             else if(selectedPosition.size()<10 && button!=null){
-                Log.e("Is there a button", button.toString());
                 button.setVisibility(ParentView.INVISIBLE);
             }
         }
