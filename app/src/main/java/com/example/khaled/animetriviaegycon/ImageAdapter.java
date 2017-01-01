@@ -79,19 +79,28 @@ public class ImageAdapter extends BaseAdapter {
                         ref.orderByChild("0").equalTo(selectedAnime.get(i)).addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
-                                String test2= dataSnapshot.getChildren().iterator().next().getKey().toString();
+                                String keyStart= dataSnapshot.getChildren().iterator().next().getKey().toString();
+                                int index;
+                                Question newQuestion;
 
-                                int index = (int) (Integer.parseInt(test2) + Math.random()*dataSnapshot.getChildrenCount());
+                                while(true) {
+                                    index = (int) (Integer.parseInt(keyStart) + Math.random() * dataSnapshot.getChildrenCount());
+                                    String questionText = dataSnapshot.child(Integer.toString(index)).child("2").getValue().toString();
+                                    String ans1 = dataSnapshot.child(Integer.toString(index)).child("3").getValue().toString();
+                                    String ans2 = dataSnapshot.child(Integer.toString(index)).child("4").getValue().toString();
+                                    String ans3 = dataSnapshot.child(Integer.toString(index)).child("5").getValue().toString();
+                                    String name = dataSnapshot.child(Integer.toString(index)).child("0").getValue().toString();
+                                    String url = "";
+                                    newQuestion = new Question(name, questionText, ans1, ans2, ans3, url);
 
-                                String questionText = dataSnapshot.child(Integer.toString(index)).child("2").getValue().toString();
-                                String ans1 = dataSnapshot.child(Integer.toString(index)).child("3").getValue().toString();
-                                String ans2 = dataSnapshot.child(Integer.toString(index)).child("4").getValue().toString();
-                                String ans3 = dataSnapshot.child(Integer.toString(index)).child("5").getValue().toString();
-                                String name = dataSnapshot.child(Integer.toString(index)).child("0").getValue().toString();
-                                String url = "";
-
-                                Question newQuestion = new Question(name, questionText,ans1,ans2,ans3,url);
-                                questionList.add(newQuestion);
+                                    if(questionList.contains(newQuestion)){
+                                        continue;
+                                    }
+                                    else{
+                                        questionList.add(newQuestion);
+                                        break;
+                                    }
+                                }
 
                                 if(questionList.size()==20){
                                     Intent quiz = new Intent(context, QuestionActivity.class);

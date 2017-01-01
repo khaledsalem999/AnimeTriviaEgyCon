@@ -24,7 +24,7 @@ import org.w3c.dom.Text;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
-public class QuestionActivity extends AppCompatActivity{
+public class QuestionActivity extends AppCompatActivity implements View.OnClickListener{
     DatabaseReference ref = FirebaseDatabase.getInstance().getReference("questions");
     int counter;
     ArrayList<Question> questionList;
@@ -51,23 +51,31 @@ public class QuestionActivity extends AppCompatActivity{
         ans2.setText(questionList.get(counter).getSecAns());
         ans3.setText(questionList.get(counter).getThirdAns());
 
-        ans1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(counter<19){
-                    counter++;
-                    Intent quiz = new Intent(QuestionActivity.this, QuestionActivity.class);
-                    quiz.putExtra("Counter", counter);
-                    quiz.putExtra("Questions",questionList);
-                    QuestionActivity.this.startActivity(quiz);
-                }
-                else{
-                    Intent result = new Intent(QuestionActivity.this, ResultsActivity.class);
-                    QuestionActivity.this.startActivity(result);
-                }
-            }
-        });
-        //ans2.setOnClickListener();
-        //ans3.setOnClickListener();
+        ans1.setOnClickListener(this);
+        ans2.setOnClickListener(this);
+        ans3.setOnClickListener(this);
+
+    }
+
+    @Override
+    public void onClick(View view) {
+        int id= view.getId();
+
+        switch(id){
+
+        }
+
+        if(counter<19){
+            counter++;
+            Intent quiz = new Intent(QuestionActivity.this, QuestionActivity.class);
+            quiz.putExtra("Counter", counter);
+            quiz.putExtra("Questions",questionList);
+            QuestionActivity.this.startActivity(quiz);
+        }
+        else{
+            finish();
+            Intent result = new Intent(QuestionActivity.this, ResultsActivity.class);
+            QuestionActivity.this.startActivity(result);
+        }
     }
 }
