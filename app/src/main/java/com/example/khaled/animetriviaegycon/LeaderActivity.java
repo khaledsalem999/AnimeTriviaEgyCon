@@ -18,6 +18,9 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -41,6 +44,8 @@ public class LeaderActivity extends Fragment {
         ListView lstItems = (ListView)view.findViewById(R.id.lista);
 
         ArrayList<String> prueba = new ArrayList<String>();
+
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("results");
 
         for(int i = 0 ; i<20 ; i++){
             prueba.add("player "+ i);

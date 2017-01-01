@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
@@ -31,22 +32,29 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
     ArrayList<Question> questionList;
     ArrayList<String> answer;
     private CountDownTimer Qtimer;
+    long TimeInMills;
     long TimeInSec;
+    long Duration;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_question);
 
+        counter = getIntent().getIntExtra("Counter",0);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("Question number "+ (counter+1) );
         setSupportActionBar(toolbar);
         questionList = (ArrayList<Question>) getIntent().getSerializableExtra("Questions");
-        counter = getIntent().getIntExtra("Counter",0);
+        Duration = getIntent().getLongExtra("Time",0);
         Log.e("Question", Integer.toString(counter));
 
-
-
         final TextView question = (TextView) findViewById(R.id.question);
+
+        ProgressBar progress = (ProgressBar) findViewById(R.id.progressBar13);
+        progress.setMax(20);
+        progress.setProgress(counter);
 
         Button buttons[] = new Button[3];
         buttons[0] = (Button) findViewById(R.id.ans1);
@@ -78,22 +86,27 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
             public void onTick(long millisUntilFinished) {
                 TimerLable.setText("" + millisUntilFinished/1000);
                 TimeInSec = millisUntilFinished/1000;
+                TimeInMills= 10 * 1000 - millisUntilFinished;
             }
 
             @Override
             public void onFinish() {
                 if(counter<19){
+                    Duration+=TimeInMills;
                     counter++;
                     Intent quiz = new Intent(QuestionActivity.this, QuestionActivity.class);
                     quiz.putExtra("Counter", counter);
                     quiz.putExtra("Questions",questionList);
+                    quiz.putExtra("Time",Duration);
                     finish();
                     Qtimer.cancel();
                     QuestionActivity.this.startActivity(quiz);
                 }
                 else{
+                    Duration+=TimeInMills;
                     Intent result = new Intent(QuestionActivity.this, ResultsActivity.class);
                     result.putExtra("Questions",questionList);
+                    result.putExtra("Time",Duration);
                     finish();
                     Qtimer.cancel();
                     QuestionActivity.this.startActivity(result);
@@ -146,16 +159,20 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
 
         if(counter<19){
             counter++;
+            Duration+=TimeInMills;
             Intent quiz = new Intent(QuestionActivity.this, QuestionActivity.class);
             quiz.putExtra("Counter", counter);
             quiz.putExtra("Questions",questionList);
+            quiz.putExtra("Time",Duration);
             finish();
             Qtimer.cancel();
             QuestionActivity.this.startActivity(quiz);
         }
         else{
+            Duration+=TimeInMills;
             Intent result = new Intent(QuestionActivity.this, ResultsActivity.class);
             result.putExtra("Questions",questionList);
+            result.putExtra("Time",Duration);
             finish();
             Qtimer.cancel();
             QuestionActivity.this.startActivity(result);

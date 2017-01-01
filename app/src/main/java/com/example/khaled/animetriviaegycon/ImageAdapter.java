@@ -104,8 +104,10 @@ public class ImageAdapter extends BaseAdapter {
                                 if(questionList.size()==20){
                                     Intent quiz = new Intent(context, QuestionActivity.class);
                                     int counter=0;
+                                    long millis=0;
                                     quiz.putExtra("Counter", counter);
                                     quiz.putExtra("Questions", questionList);
+                                    quiz.putExtra("Time",millis);
                                     context.startActivity(quiz);
                                 }
 
@@ -161,8 +163,8 @@ public class ImageAdapter extends BaseAdapter {
 
     public void adjustSelect(TextView text, boolean visible){
         if(visible) {
-            text.setBackgroundColor(Color.parseColor("#304FFE"));
-            text.setTextColor(Color.parseColor("#000000"));
+            text.setBackgroundColor(Color.parseColor("#7E2856"));
+            text.setTextColor(Color.parseColor("#FFFFFF"));
         }
         else{
             text.setBackgroundColor(Color.parseColor("#55000000"));
