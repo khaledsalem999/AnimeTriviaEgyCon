@@ -37,29 +37,29 @@
             android:layout_weight="0.79" />
 
         <TextView
-            android:text="Who is the guy on the pic ??"
+            android:text="-"
             android:background="@drawable/back"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/textView"
+            android:id="@+id/question"
             android:layout_weight="0.10"
             android:padding="7dp"
             android:textAppearance="@style/TextAppearance.AppCompat.Button" />
 
         <Button
-            android:text="Ans1 "
+            android:text="-"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/ans1" />
 
         <Button
-            android:text="ans2"
+            android:text="-"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/ans2" />
 
         <Button
-            android:text="ans3"
+            android:text="-"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/ans3" />

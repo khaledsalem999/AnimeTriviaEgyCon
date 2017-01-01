@@ -6,8 +6,19 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import org.w3c.dom.Text;
 
 public class QuestionActivity extends AppCompatActivity {
+    DatabaseReference ref = FirebaseDatabase.getInstance().getReference("questions");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,7 +28,25 @@ public class QuestionActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        final TextView question = (TextView) findViewById(R.id.question);
+        final Button ans1 = (Button) findViewById(R.id.ans1);
+        final Button ans2 = (Button) findViewById(R.id.ans2);
+        final Button ans3 = (Button) findViewById(R.id.ans3);
 
+        ref.orderByChild("0").equalTo("Psycho Pass").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                question.setText(dataSnapshot.getChildren().iterator().next().child("2").getValue().toString());
+                ans1.setText(dataSnapshot.getChildren().iterator().next().child("3").getValue().toString());
+                ans2.setText(dataSnapshot.getChildren().iterator().next().child("4").getValue().toString());
+                ans3.setText(dataSnapshot.getChildren().iterator().next().child("5").getValue().toString());
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 
 }
