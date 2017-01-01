@@ -103,7 +103,7 @@ public class ImageAdapter extends BaseAdapter {
                 selectedPosition.remove(position);
             checkButton(ParentView,context);
         }
-        else {
+        else if(selectedPosition.contains(position)==false  && selectedPosition.size()<10) {
             adjustSelect(viewHolder.text, true);
             selectedPosition.add(position);
             Log.e("Added position:", Integer.toString(position));
@@ -116,7 +116,7 @@ public class ImageAdapter extends BaseAdapter {
             text.setBackgroundColor(Color.parseColor("#304FFE"));
             text.setTextColor(Color.parseColor("#000000"));
         }
-        else {
+        else{
             text.setBackgroundColor(Color.parseColor("#55000000"));
             text.setTextColor(Color.parseColor("#FFFFFF"));
         }
