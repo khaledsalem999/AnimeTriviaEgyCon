@@ -32,12 +32,15 @@
         <TextView
             android:textColor="#FFFFFF"
             android:text="TextView"
+            android:layout_marginBottom="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/Rules"
             android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
 
         <Button
+            android:textColor="#FFFFFF"
+            android:background="#7E2856"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/button2"

@@ -21,18 +21,9 @@ public class RulesActivity extends AppCompatActivity {
 
         TextView DaRules = (TextView) findViewById(R.id.Rules);
 
-        DaRules.setText(" 1. Rule Number 1" +
-                "\n\n 2. Rule Number 2 " +
-                "\n\n 3. Rule Number 3");
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+        DaRules.setText(" 1. Pick 10 of your facorite animes to be asked 2 questions about each on of them" +
+                "\n\n 2. You have 10 seconds to answer each question" +
+                "\n\n 3. The questions are random and 2 people will not have the same list of questions");
 
         Button Startbutton = (Button) findViewById(R.id.button2);
 
