@@ -92,7 +92,7 @@ public class ImageAdapter extends BaseAdapter {
                                     String url =  dataSnapshot.child(Integer.toString(index)).child("6").getValue().toString();
                                     newQuestion = new Question(name, questionText, ans1, ans2, ans3, url);
 
-                                    if(questionList.contains(newQuestion)){
+                                    if(questionList.contains(newQuestion) && newQuestion!=null){
                                         continue;
                                     }
                                     else{

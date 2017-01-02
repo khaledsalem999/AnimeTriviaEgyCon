@@ -1,10 +1,12 @@
 package com.example.khaled.animetriviaegycon;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
@@ -26,6 +28,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import org.w3c.dom.Text;
 
@@ -66,7 +73,6 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -74,6 +80,29 @@ public class MainActivity extends AppCompatActivity
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+
+        View header = navigationView.getHeaderView(0);
+        final TextView accName = (TextView)header.findViewById(R.id.accName);
+        final TextView email = (TextView) header.findViewById(R.id.EmailView);
+
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("users");
+        final FirebaseAuth auth = FirebaseAuth.getInstance();
+        String userID= auth.getCurrentUser().getUid();
+
+        ref.orderByChild("id").equalTo(userID).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String name =  dataSnapshot.getChildren().iterator().next().child("firstName").getValue().toString() + " "
+                        + dataSnapshot.getChildren().iterator().next().child("lastName").getValue().toString();
+                accName.setText(name);
+                email.setText(auth.getCurrentUser().getEmail());
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
         navigationView.setNavigationItemSelectedListener(this);
     }
 
@@ -135,14 +164,7 @@ public class MainActivity extends AppCompatActivity
 
         }
 
-        TextView SignIn = (TextView) findViewById(R.id.Signin);
 
-        SignIn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this,LoginActivity.class));
-            }
-        });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
