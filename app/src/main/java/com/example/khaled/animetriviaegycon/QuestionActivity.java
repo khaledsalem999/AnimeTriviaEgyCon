@@ -19,6 +19,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -203,6 +204,8 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
 
     @Override
     public void onBackPressed() {
+        Toast.makeText(QuestionActivity.this, "There is no going back :)",
+                Toast.LENGTH_LONG).show();
     }
 
 }
