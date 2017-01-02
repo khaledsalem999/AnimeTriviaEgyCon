@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.media.Image;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Handler;
 import android.support.annotation.IntegerRes;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -139,6 +140,7 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
 
         int id= b.getId();
         b.startAnimation(AnimationUtils.loadAnimation(QuestionActivity.this,android.R.anim.slide_out_right));
+        b.setVisibility(view.INVISIBLE);
 
         switch(id){
             case R.id.ans1:
@@ -176,23 +178,33 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
 
         if(counter<19){
             counter++;
-            Duration+=TimeInMills;
-            Intent quiz = new Intent(QuestionActivity.this, QuestionActivity.class);
-            quiz.putExtra("Counter", counter);
-            quiz.putExtra("Questions",questionList);
-            quiz.putExtra("Time",Duration);
-            finish();
-            Qtimer.cancel();
-            QuestionActivity.this.startActivity(quiz);
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    Duration+=TimeInMills;
+                    Intent quiz = new Intent(QuestionActivity.this, QuestionActivity.class);
+                    quiz.putExtra("Counter", counter);
+                    quiz.putExtra("Questions",questionList);
+                    quiz.putExtra("Time",Duration);
+                    finish();
+                    Qtimer.cancel();
+                    QuestionActivity.this.startActivity(quiz);
+                }
+            }, 1000);
         }
         else{
-            Duration+=TimeInMills;
-            Intent result = new Intent(QuestionActivity.this, ResultsActivity.class);
-            result.putExtra("Questions",questionList);
-            result.putExtra("Time",Duration);
-            finish();
-            Qtimer.cancel();
-            QuestionActivity.this.startActivity(result);
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    Duration+=TimeInMills;
+                    Intent result = new Intent(QuestionActivity.this, ResultsActivity.class);
+                    result.putExtra("Questions",questionList);
+                    result.putExtra("Time",Duration);
+                    finish();
+                    Qtimer.cancel();
+                    QuestionActivity.this.startActivity(result);
+                }
+            }, 1000);
         }
     }
 
