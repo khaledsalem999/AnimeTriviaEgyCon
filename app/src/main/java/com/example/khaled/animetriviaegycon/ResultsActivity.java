@@ -9,6 +9,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -93,6 +94,10 @@ public class ResultsActivity extends AppCompatActivity {
         personalscores.startAnimation(animation5);
         rans.startAnimation(animation7);
         rank.startAnimation(animation8);
+
+        RatingBar rating = (RatingBar)findViewById(R.id.ratingBarResults);
+        rating.setMax(20);
+        rating.setProgress(score);
 
         writeResult();
     }

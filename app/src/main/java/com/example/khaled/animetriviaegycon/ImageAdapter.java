@@ -89,7 +89,7 @@ public class ImageAdapter extends BaseAdapter {
                                     String ans2 = dataSnapshot.child(Integer.toString(index)).child("4").getValue().toString();
                                     String ans3 = dataSnapshot.child(Integer.toString(index)).child("5").getValue().toString();
                                     String name = dataSnapshot.child(Integer.toString(index)).child("0").getValue().toString();
-                                    String url = "";
+                                    String url =  dataSnapshot.child(Integer.toString(index)).child("6").getValue().toString();
                                     newQuestion = new Question(name, questionText, ans1, ans2, ans3, url);
 
                                     if(questionList.contains(newQuestion)){

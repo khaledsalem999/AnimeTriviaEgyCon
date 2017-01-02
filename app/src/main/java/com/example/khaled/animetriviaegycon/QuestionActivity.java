@@ -1,6 +1,7 @@
 package com.example.khaled.animetriviaegycon;
 
 import android.content.Intent;
+import android.media.Image;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.annotation.IntegerRes;
@@ -12,6 +13,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -49,6 +51,8 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
         questionList = (ArrayList<Question>) getIntent().getSerializableExtra("Questions");
         Duration = getIntent().getLongExtra("Time",0);
         Log.e("Question", Integer.toString(counter));
+
+        ImageView img = (ImageView) findViewById(R.id.imageView2);
 
         final TextView question = (TextView) findViewById(R.id.question);
 
@@ -113,6 +117,8 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
                 }
             }
         };
+
+        PicassoClient.downloadImage(this,questionList.get(counter).getPicUrl(),img);
         Qtimer.start();
 
     }
