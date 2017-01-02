@@ -178,9 +178,6 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
 
         if(counter<19){
             counter++;
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
                     Duration+=TimeInMills;
                     Intent quiz = new Intent(QuestionActivity.this, QuestionActivity.class);
                     quiz.putExtra("Counter", counter);
@@ -189,13 +186,8 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
                     finish();
                     Qtimer.cancel();
                     QuestionActivity.this.startActivity(quiz);
-                }
-            }, 1000);
         }
         else{
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
                     Duration+=TimeInMills;
                     Intent result = new Intent(QuestionActivity.this, ResultsActivity.class);
                     result.putExtra("Questions",questionList);
@@ -203,8 +195,7 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
                     finish();
                     Qtimer.cancel();
                     QuestionActivity.this.startActivity(result);
-                }
-            }, 1000);
+
         }
     }
 
