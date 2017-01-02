@@ -1,5 +1,6 @@
 package com.example.khaled.animetriviaegycon;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.design.widget.FloatingActionButton;
@@ -113,6 +114,13 @@ public class ResultsActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent restart = new Intent(ResultsActivity.this, LoginActivity.class);
+        finish();
+        ResultsActivity.this.startActivity(restart);
     }
 
 }
