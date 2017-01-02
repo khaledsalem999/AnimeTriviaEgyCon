@@ -8,6 +8,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -18,14 +19,20 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 public class LeaderActivity extends Fragment {
+    ListView lstItems;
+    ArrayAdapter<String> allItemsAdapter;
 
     public LeaderActivity() {
         // Required empty public constructor
@@ -34,30 +41,41 @@ public class LeaderActivity extends Fragment {
     private View view;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.content_leader, container, false);
-        // Inflate the layout for this fragment
+    public void onCreate(Bundle savedInstanceState){
+        super.onCreate(savedInstanceState);
 
+    }
+
+    @Override
+    public View onCreateView(final LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
+        view = inflater.inflate(R.layout.content_leader, container, false);
+        lstItems = (ListView)view.findViewById(R.id.lista);
         setHasOptionsMenu(true);
+        final ArrayList<String> prueba = new ArrayList<String>();
+        allItemsAdapter = new ArrayAdapter<String>(getActivity().getBaseContext(), android.R.layout.simple_list_item_1,prueba);
 
-        ListView lstItems = (ListView)view.findViewById(R.id.lista);
+        final DatabaseReference ref = FirebaseDatabase.getInstance().getReference("results");
+        Query query = ref.orderByChild("wrongAnswers");
 
-        ArrayList<String> prueba = new ArrayList<String>();
-
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("results");
-
-        for(int i = 0 ; i<20 ; i++){
-            prueba.add("player "+ i);
-        }
-
-        ArrayAdapter<String> allItemsAdapter = new ArrayAdapter<String>(getActivity().getBaseContext(), android.R.layout.simple_list_item_1,prueba);
-
-        lstItems.setAdapter(allItemsAdapter);
-
-
-
-
+        query.limitToFirst(20).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // Inflate the layout for this fragment
+                for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
+                    String name = postSnapshot.child("firstName").getValue().toString()
+                            + " "+postSnapshot.child("lastName").getValue().toString();
+                    String score = "    "+ postSnapshot.child("correctAnswers").getValue().toString();
+                    String time = "     "+ postSnapshot.child("timeInMillis").getValue().toString();
+                    prueba.add(name + score + time);
+                    Log.e("Get Data", name);
+                    lstItems.setAdapter(allItemsAdapter);
+                    view.invalidate();
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
         return view;
     }
 

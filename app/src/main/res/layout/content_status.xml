@@ -54,7 +54,7 @@
                     android:textColor="#FFFFFF"
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
-                    android:text="Favorite Anime"
+                    android:text=""
                     android:textSize="20dp"
                     android:id="@+id/favanime"
                     android:textAppearance="@style/TextAppearance.AppCompat.Button" />
@@ -88,7 +88,7 @@
                     android:textColor="#FFFFFF"
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
-                    android:text="Ranking"
+                    android:text=""
                     android:textSize="20dp"
                     android:id="@+id/leaderboardlable"
                     android:textAppearance="@style/TextAppearance.AppCompat.Button" />
@@ -114,7 +114,7 @@
                 android:textColor="#FFFFFF"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
-                android:text="5000"
+                android:text=""
                 android:textSize="20dp"
                 android:id="@+id/personalscore"
                 android:textAppearance="@style/TextAppearance.AppCompat.Button" />
@@ -128,7 +128,7 @@
 
             <TextView
                 android:textColor="#FFFFFF"
-                android:text="NARUTO"
+                android:text=""
                 android:textSize="20dp"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
@@ -144,7 +144,7 @@
 
             <TextView
                 android:textColor="#FFFFFF"
-                android:text="35"
+                android:text=""
                 android:textSize="20dp"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
@@ -160,7 +160,7 @@
 
             <TextView
                 android:textColor="#FFFFFF"
-                android:text="60"
+                android:text=""
                 android:textSize="20dp"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
@@ -174,7 +174,8 @@
         android:layout_height="wrap_content"
         android:id="@+id/ratingBar"
         android:layout_centerHorizontal="true"
-        android:layout_alignParentBottom="true" />
+        android:layout_alignParentBottom="true"
+        android:clickable="false" />
 
     <TextView
         android:textColor="#FFFFFF"
