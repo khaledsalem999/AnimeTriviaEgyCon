@@ -93,6 +93,8 @@
         android:layout_alignParentEnd="true" />
 
     <Button
+        android:background="#7E2856"
+        android:textColor="#FFFFFF"
         android:text="Complete Registeration"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
