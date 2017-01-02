@@ -46,14 +46,6 @@ public class ResultsActivity extends AppCompatActivity {
             }
         }
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.BackToAnimes);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
 
         final TextView HSLable = (TextView) findViewById(R.id.HighScoreLableResults);
         final TextView rightanslables = (TextView) findViewById(R.id.rightanslableResults);
