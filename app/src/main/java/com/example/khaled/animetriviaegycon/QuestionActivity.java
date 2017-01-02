@@ -12,6 +12,8 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -51,6 +53,9 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
         questionList = (ArrayList<Question>) getIntent().getSerializableExtra("Questions");
         Duration = getIntent().getLongExtra("Time",0);
         Log.e("Question", Integer.toString(counter));
+        Animation ButtonAnim = AnimationUtils.loadAnimation(QuestionActivity.this,android.R.anim.slide_in_left);
+
+        ButtonAnim.setDuration(300);
 
         ImageView img = (ImageView) findViewById(R.id.imageView2);
 
@@ -64,6 +69,11 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
         buttons[0] = (Button) findViewById(R.id.ans1);
         buttons[1] = (Button) findViewById(R.id.ans2);
         buttons[2] = (Button) findViewById(R.id.ans3);
+
+        ButtonAnim.setStartOffset(900);
+        buttons[0].startAnimation(ButtonAnim);
+        buttons[1].startAnimation(ButtonAnim);
+        buttons[2].startAnimation(ButtonAnim);
 
         String answer[]= new String[3];
         answer[0]=questionList.get(counter).getCorrectAns().substring(1);
@@ -128,6 +138,7 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
         Button b = (Button) view;
 
         int id= b.getId();
+        b.startAnimation(AnimationUtils.loadAnimation(QuestionActivity.this,android.R.anim.slide_out_right));
 
         switch(id){
             case R.id.ans1:
