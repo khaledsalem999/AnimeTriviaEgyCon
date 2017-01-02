@@ -139,7 +139,8 @@
         android:layout_height="wrap_content"
         android:id="@+id/ratingBarResults"
         android:layout_centerHorizontal="true"
-        android:layout_alignParentBottom="true" />
+        android:layout_alignParentBottom="true"
+        android:isIndicator="true" />
 
     <TextView
         android:textColor="#FFFFFF"

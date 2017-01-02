@@ -175,7 +175,8 @@
         android:id="@+id/ratingBar"
         android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
-        android:clickable="false" />
+        android:clickable="false"
+        android:isIndicator="true" />
 
     <TextView
         android:textColor="#FFFFFF"
