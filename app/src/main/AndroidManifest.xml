@@ -37,8 +37,7 @@
 
         <activity
             android:name=".LoginActivity"
-            android:label="@string/sign_in"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:label="@string/sign_in"/>
         <activity
             android:name=".RegisterActivity"
             android:label="@string/title_activity_register"
@@ -46,14 +45,6 @@
         <activity
             android:name=".RulesActivity"
             android:label="@string/title_activity_rules"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".LeaderActivity"
-            android:label="@string/title_activity_leader"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".StatusActivity"
-            android:label="@string/title_activity_status"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:screenOrientation="portrait"
