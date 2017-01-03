@@ -42,7 +42,9 @@
                     android:hint="@string/prompt_email"
                     android:inputType="textEmailAddress"
                     android:maxLines="1"
-                    android:singleLine="true" />
+                    android:singleLine="true"
+                    android:textColor="#FFFFFF"
+                    />
 
             </android.support.design.widget.TextInputLayout>
 
@@ -60,6 +62,7 @@
                     android:imeOptions="actionUnspecified"
                     android:inputType="textPassword"
                     android:maxLines="1"
+                    android:textColor="#FFFFFF"
                     android:singleLine="true" />
 
             </android.support.design.widget.TextInputLayout>
@@ -88,7 +91,8 @@
                 android:id="@+id/google_sign_in_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"/>
+                android:layout_gravity="center_horizontal"
+                android:visibility="invisible"/>
 
         </LinearLayout>
     </ScrollView>

@@ -21,7 +21,7 @@
 
         <TextView
             android:textColor="#FFFFFF"
-            android:text="Da Rules"
+            android:text="Quiz Rules"
             android:padding="5dp"
             android:textAlignment="center"
             android:layout_width="match_parent"

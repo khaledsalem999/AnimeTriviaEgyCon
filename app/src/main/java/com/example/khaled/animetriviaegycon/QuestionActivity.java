@@ -56,6 +56,22 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
         Duration = getIntent().getLongExtra("Time",0);
         Log.e("Question", Integer.toString(counter));
         Animation ButtonAnim = AnimationUtils.loadAnimation(QuestionActivity.this,android.R.anim.slide_in_left);
+        ButtonAnim.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                Qtimer.start();
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
 
         ButtonAnim.setDuration(300);
 
@@ -97,7 +113,7 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
 
         //Timer shit
         final TextView TimerLable = (TextView) findViewById(R.id.Timer);
-        Qtimer = new CountDownTimer(10 * 1000,1000) {
+        Qtimer = new CountDownTimer(30 * 1000,1000) {
             @Override
             public void onTick(long millisUntilFinished) {
                 TimerLable.setText("" + millisUntilFinished/1000);
@@ -131,7 +147,7 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
         };
 
         PicassoClient.downloadImage(this,questionList.get(counter).getPicUrl(),img);
-        Qtimer.start();
+
 
     }
 

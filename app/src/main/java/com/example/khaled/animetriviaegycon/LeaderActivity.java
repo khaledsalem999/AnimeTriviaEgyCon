@@ -33,6 +33,8 @@ import java.util.List;
 public class LeaderActivity extends Fragment {
     ListView lstItems;
     ArrayAdapter<String> allItemsAdapter;
+    String newName;
+    ArrayList<String> names;
 
     public LeaderActivity() {
         // Required empty public constructor
@@ -50,9 +52,11 @@ public class LeaderActivity extends Fragment {
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.content_leader, container, false);
         lstItems = (ListView)view.findViewById(R.id.lista);
+        names=new ArrayList<String>();
+        newName="";
         setHasOptionsMenu(true);
         final ArrayList<String> prueba = new ArrayList<String>();
-        allItemsAdapter = new ArrayAdapter<String>(getActivity().getBaseContext(), android.R.layout.simple_list_item_1,prueba);
+        allItemsAdapter = new ArrayAdapter<String>(getActivity().getBaseContext(), R.layout.content_leader_text, prueba);
 
         final DatabaseReference ref = FirebaseDatabase.getInstance().getReference("results");
         Query query = ref.orderByChild("wrongAnswers");
@@ -62,14 +66,20 @@ public class LeaderActivity extends Fragment {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // Inflate the layout for this fragment
                 for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
-                    String name = postSnapshot.child("firstName").getValue().toString()
+                    newName= postSnapshot.child("firstName").getValue().toString()
                             + " "+postSnapshot.child("lastName").getValue().toString();
-                    String score = "    "+ postSnapshot.child("correctAnswers").getValue().toString();
-                    String time = "     "+ postSnapshot.child("timeInMillis").getValue().toString();
-                    prueba.add(name + score + time);
-                    Log.e("Get Data", name);
+
+                    if(names.contains(newName)!=true){
+                        names.add(newName);
+                        String score = "    "+ postSnapshot.child("correctAnswers").getValue().toString();
+                        String time = "     "+ postSnapshot.child("timeInMillis").getValue().toString();
+                        prueba.add(newName + score + time);
+                        Log.e("Get Data", newName);
+                    }
+
+
                     lstItems.setAdapter(allItemsAdapter);
-                    view.invalidate();
+                    //view.invalidate();
                 }
             }
             @Override

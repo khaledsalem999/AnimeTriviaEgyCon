@@ -51,18 +51,26 @@ public class StatusActivity extends Fragment {
         final View view = inflater.inflate(R.layout.content_status, container, false);
 
         final TextView HSLable = (TextView) view.findViewById(R.id.HighScoreLable);
+        HSLable.setVisibility(View.INVISIBLE);
         HSLable.setText("Best score");
         final TextView Fanimes = (TextView) view.findViewById(R.id.favanime);
+        Fanimes.setVisibility(View.INVISIBLE);
         Fanimes.setText("Best duration");
         final TextView rightanslables = (TextView) view.findViewById(R.id.rightanslable);
+        rightanslables.setVisibility(View.INVISIBLE);
         rightanslables.setText("Correct answers");
         final TextView leaderboardlables = (TextView) view.findViewById(R.id.leaderboardlable);
+        leaderboardlables.setVisibility(View.INVISIBLE);
         leaderboardlables.setText("Rank");
 
         final TextView personalscores = (TextView) view.findViewById(R.id.personalscore);
+        personalscores.setVisibility(View.INVISIBLE);
         final TextView fanimu = (TextView) view.findViewById(R.id.favanimename);
+        fanimu.setVisibility(View.INVISIBLE);
         final TextView rans = (TextView) view.findViewById(R.id.rightans);
+        rans.setVisibility(View.INVISIBLE);
         final TextView rank = (TextView) view.findViewById(R.id.worldplace);
+        rank.setVisibility(View.INVISIBLE);
 
         final DatabaseReference ref = FirebaseDatabase.getInstance().getReference("results");
         final FirebaseAuth auth = FirebaseAuth.getInstance();
@@ -99,6 +107,16 @@ public class StatusActivity extends Fragment {
                         rate.setMax((int)max);
                         rate.setProgress((int)total[0]);
                         rank.setText(Integer.toString(index[0]));
+
+
+                        HSLable.setVisibility(View.VISIBLE);
+                        Fanimes.setVisibility(View.VISIBLE);
+                        rightanslables.setVisibility(View.VISIBLE);
+                        leaderboardlables.setVisibility(View.VISIBLE);
+                        personalscores.setVisibility(View.VISIBLE);
+                        fanimu.setVisibility(View.VISIBLE);
+                        rans.setVisibility(View.VISIBLE);
+                        rank.setVisibility(View.VISIBLE);
 
                         //Animation Declaration
                         Animation animation1 = AnimationUtils.loadAnimation(getActivity(),android.R.anim.slide_in_left);

@@ -14,16 +14,18 @@ public class RulesActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rules);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         TextView DaRules = (TextView) findViewById(R.id.Rules);
-
-        DaRules.setText(" 1. Pick 10 of your facorite animes to be asked 2 questions about each on of them" +
-                "\n\n 2. You have 10 seconds to answer each question" +
-                "\n\n 3. The questions are random and 2 people will not have the same list of questions");
+        DaRules.setTextSize(20);
+        DaRules.setText(" 1. Pick 10 anime series of your selection to be quizzed on." +
+                "\n\n 2. You have 30 seconds to answer each question" +
+                "\n\n 3. Solve the randomized questions correctly as fast as possible, the timer is the tie breaker!");
 
         Button Startbutton = (Button) findViewById(R.id.button2);
 
