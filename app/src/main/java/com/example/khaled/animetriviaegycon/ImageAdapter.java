@@ -1,5 +1,7 @@
 package com.example.khaled.animetriviaegycon;
 
+import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -32,6 +34,7 @@ public class ImageAdapter extends BaseAdapter {
     ArrayList<Integer> selectedPosition = new ArrayList<Integer>();
     ArrayList<String> selectedAnime = new ArrayList<String>();
     ArrayList<Question> questionList = new ArrayList<Question>();
+    ArrayList<String> questions = new ArrayList<String>();
     private ArrayList<Anime> anime;
     private LayoutInflater mInflater;
     Context context;
@@ -61,7 +64,7 @@ public class ImageAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(final int position, View ConvertView, ViewGroup parent) {
+    public View getView(final int position, View ConvertView, final ViewGroup parent) {
         final AnimeViewHandler holder;
 
         if (mInflater == null) {
@@ -71,7 +74,10 @@ public class ImageAdapter extends BaseAdapter {
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
+                    button.setVisibility(ParentView.INVISIBLE);
+                    final ProgressDialog loading = new ProgressDialog(context);
+                    loading.setMessage("Processing, please wait...");
+                    loading.show();
                     DatabaseReference ref= FirebaseDatabase.getInstance().getReference("questions");
                     for(int i=0; i<20; i++){
                         final int finalI = i;
@@ -92,24 +98,30 @@ public class ImageAdapter extends BaseAdapter {
                                     String url =  dataSnapshot.child(Integer.toString(index)).child("6").getValue().toString();
                                     newQuestion = new Question(name, questionText, ans1, ans2, ans3, url);
 
-                                    if(questionList.contains(newQuestion) && newQuestion!=null){
+                                    if(questions.contains(questionText) && newQuestion!=null){
                                         continue;
                                     }
                                     else{
+                                        questions.add(questionText);
                                         questionList.add(newQuestion);
                                         break;
                                     }
                                 }
 
                                 if(questionList.size()==20){
+
                                     Intent quiz = new Intent(context, QuestionActivity.class);
                                     int counter=0;
                                     long millis=0;
                                     quiz.putExtra("Counter", counter);
                                     quiz.putExtra("Questions", questionList);
                                     quiz.putExtra("Time",millis);
+                                    questions.clear();
+                                    selectedAnime.clear();
+                                    selectedPosition.clear();
                                     context.startActivity(quiz);
-                                }
+                                    loading.dismiss();
+                                    ((Activity)context).finish();                                }
 
                                 //dataSnapshot.child(Integer.toString(index)).getChildren().iterator().next().child("2").getValue().toString()
                             }

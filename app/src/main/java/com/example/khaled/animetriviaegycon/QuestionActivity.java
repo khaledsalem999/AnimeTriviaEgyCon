@@ -55,25 +55,7 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
         questionList = (ArrayList<Question>) getIntent().getSerializableExtra("Questions");
         Duration = getIntent().getLongExtra("Time",0);
         Log.e("Question", Integer.toString(counter));
-        Animation ButtonAnim = AnimationUtils.loadAnimation(QuestionActivity.this,android.R.anim.slide_in_left);
-        ButtonAnim.setAnimationListener(new Animation.AnimationListener() {
-            @Override
-            public void onAnimationStart(Animation animation) {
 
-            }
-
-            @Override
-            public void onAnimationEnd(Animation animation) {
-                Qtimer.start();
-            }
-
-            @Override
-            public void onAnimationRepeat(Animation animation) {
-
-            }
-        });
-
-        ButtonAnim.setDuration(300);
 
         ImageView img = (ImageView) findViewById(R.id.imageView2);
 
@@ -87,11 +69,6 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
         buttons[0] = (Button) findViewById(R.id.ans1);
         buttons[1] = (Button) findViewById(R.id.ans2);
         buttons[2] = (Button) findViewById(R.id.ans3);
-
-        ButtonAnim.setStartOffset(900);
-        buttons[0].startAnimation(ButtonAnim);
-        buttons[1].startAnimation(ButtonAnim);
-        buttons[2].startAnimation(ButtonAnim);
 
         String answer[]= new String[3];
         answer[0]=questionList.get(counter).getCorrectAns().substring(1);
@@ -118,7 +95,7 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
             public void onTick(long millisUntilFinished) {
                 TimerLable.setText("" + millisUntilFinished/1000);
                 TimeInSec = millisUntilFinished/1000;
-                TimeInMills= 10 * 1000 - millisUntilFinished;
+                TimeInMills= 30 * 1000 - millisUntilFinished;
             }
 
             @Override
@@ -156,8 +133,6 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
         Button b = (Button) view;
 
         int id= b.getId();
-        b.startAnimation(AnimationUtils.loadAnimation(QuestionActivity.this,android.R.anim.slide_out_right));
-        b.setVisibility(view.INVISIBLE);
 
         switch(id){
             case R.id.ans1:
@@ -200,8 +175,8 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
                     quiz.putExtra("Counter", counter);
                     quiz.putExtra("Questions",questionList);
                     quiz.putExtra("Time",Duration);
-                    finish();
                     Qtimer.cancel();
+                    finish();
                     QuestionActivity.this.startActivity(quiz);
         }
         else{
@@ -209,8 +184,8 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
                     Intent result = new Intent(QuestionActivity.this, ResultsActivity.class);
                     result.putExtra("Questions",questionList);
                     result.putExtra("Time",Duration);
-                    finish();
                     Qtimer.cancel();
+                    finish();
                     QuestionActivity.this.startActivity(result);
 
         }

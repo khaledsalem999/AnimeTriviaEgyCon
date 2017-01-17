@@ -118,7 +118,7 @@ public class ResultsActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Intent restart = new Intent(ResultsActivity.this, LoginActivity.class);
+        Intent restart = new Intent(ResultsActivity.this, RulesActivity.class);
         finish();
         ResultsActivity.this.startActivity(restart);
     }

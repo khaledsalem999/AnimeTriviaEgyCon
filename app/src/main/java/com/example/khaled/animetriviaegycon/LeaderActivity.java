@@ -61,7 +61,7 @@ public class LeaderActivity extends Fragment {
         final DatabaseReference ref = FirebaseDatabase.getInstance().getReference("results");
         Query query = ref.orderByChild("wrongAnswers");
 
-        query.limitToFirst(20).addListenerForSingleValueEvent(new ValueEventListener() {
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // Inflate the layout for this fragment
@@ -72,11 +72,14 @@ public class LeaderActivity extends Fragment {
                     if(names.contains(newName)!=true){
                         names.add(newName);
                         String score = "    "+ postSnapshot.child("correctAnswers").getValue().toString();
-                        String time = "     "+ postSnapshot.child("timeInMillis").getValue().toString();
-                        prueba.add(newName + score + time);
+
+                        String time = postSnapshot.child("timeInMillis").getValue().toString();
+
+                        long Duration = Long.parseLong(time);
+
+                        prueba.add(newName + score + "     " + (int) ((Duration/1000*60)%60) + ":" + (int) ((Duration*0.001)%60) + ":" +(int)(Duration/100) );
                         Log.e("Get Data", newName);
                     }
-
 
                     lstItems.setAdapter(allItemsAdapter);
                     //view.invalidate();

@@ -185,4 +185,9 @@ public class RegisterActivity extends AppCompatActivity {
         //signs out from session
         firebaseAuth.signOut();
     }
+
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(this,LoginActivity.class));
+    }
 }
