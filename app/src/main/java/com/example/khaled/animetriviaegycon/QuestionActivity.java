@@ -30,17 +30,19 @@ import com.google.firebase.database.ValueEventListener;
 import org.w3c.dom.Text;
 
 import java.lang.reflect.Array;
+import java.sql.Time;
 import java.util.ArrayList;
 
 public class QuestionActivity extends AppCompatActivity implements View.OnClickListener{
     DatabaseReference ref = FirebaseDatabase.getInstance().getReference("questions");
     int counter;
     ArrayList<Question> questionList;
-    ArrayList<String> answer;
     private CountDownTimer Qtimer;
     long TimeInMills;
     long TimeInSec;
     long Duration;
+    long TimeScore;
+    long tillFinished;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,8 +56,9 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
         setSupportActionBar(toolbar);
         questionList = (ArrayList<Question>) getIntent().getSerializableExtra("Questions");
         Duration = getIntent().getLongExtra("Time",0);
-        Log.e("Question", Integer.toString(counter));
+        TimeScore = getIntent().getLongExtra("TimeScore",0);
 
+        Log.e("Question", Integer.toString(counter));
 
         ImageView img = (ImageView) findViewById(R.id.imageView2);
 
@@ -90,32 +93,39 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
 
         //Timer shit
         final TextView TimerLable = (TextView) findViewById(R.id.Timer);
-        Qtimer = new CountDownTimer(30 * 1000,1000) {
+        Qtimer = new CountDownTimer(30 * 1000, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
                 TimerLable.setText("" + millisUntilFinished/1000);
                 TimeInSec = millisUntilFinished/1000;
                 TimeInMills= 30 * 1000 - millisUntilFinished;
+                tillFinished=millisUntilFinished;
             }
 
             @Override
             public void onFinish() {
                 if(counter<19){
                     Duration+=TimeInMills;
+                    questionList.get(counter).setScore(0);
+                    questionList.get(counter).setTimeScore(0);
                     counter++;
                     Intent quiz = new Intent(QuestionActivity.this, QuestionActivity.class);
                     quiz.putExtra("Counter", counter);
                     quiz.putExtra("Questions",questionList);
                     quiz.putExtra("Time",Duration);
+                    quiz.putExtra("TimeScore",TimeScore);
                     finish();
                     Qtimer.cancel();
                     QuestionActivity.this.startActivity(quiz);
                 }
                 else{
                     Duration+=TimeInMills;
+                    questionList.get(counter).setScore(0);
+                    questionList.get(counter).setTimeScore(0);
                     Intent result = new Intent(QuestionActivity.this, ResultsActivity.class);
                     result.putExtra("Questions",questionList);
                     result.putExtra("Time",Duration);
+                    result.putExtra("TimeScore",TimeScore);
                     finish();
                     Qtimer.cancel();
                     QuestionActivity.this.startActivity(result);
@@ -124,7 +134,7 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
         };
 
         PicassoClient.downloadImage(this,questionList.get(counter).getPicUrl(),img);
-
+        Qtimer.start();
 
     }
 
@@ -139,9 +149,11 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
             {
                 if(questionList.get(counter).getCorrectAns().substring(1).equals(b.getText())){
                     questionList.get(counter).setScore(1);
+                    TimeScore = TimeScore +(1 - tillFinished);
                 }
                 else{
                     questionList.get(counter).setScore(0);
+                    questionList.get(counter).setTimeScore(0);
                 }
                 break;
             }
@@ -149,9 +161,11 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
             {
                 if(questionList.get(counter).getCorrectAns().substring(1).equals(b.getText())){
                     questionList.get(counter).setScore(1);
+                    TimeScore = TimeScore +(1 - tillFinished);
                 }
                 else{
                     questionList.get(counter).setScore(0);
+                    questionList.get(counter).setTimeScore(0);
                 }
                 break;
             }
@@ -159,9 +173,11 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
             {
                 if(questionList.get(counter).getCorrectAns().substring(1).equals(b.getText())){
                     questionList.get(counter).setScore(1);
+                    TimeScore = TimeScore +(1 - tillFinished);
                 }
                 else{
                     questionList.get(counter).setScore(0);
+                    questionList.get(counter).setTimeScore(0);
                 }
                 break;
             }
@@ -175,6 +191,7 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
                     quiz.putExtra("Counter", counter);
                     quiz.putExtra("Questions",questionList);
                     quiz.putExtra("Time",Duration);
+                    quiz.putExtra("TimeScore",TimeScore);
                     Qtimer.cancel();
                     finish();
                     QuestionActivity.this.startActivity(quiz);
@@ -184,6 +201,7 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
                     Intent result = new Intent(QuestionActivity.this, ResultsActivity.class);
                     result.putExtra("Questions",questionList);
                     result.putExtra("Time",Duration);
+                    result.putExtra("TimeScore",TimeScore);
                     Qtimer.cancel();
                     finish();
                     QuestionActivity.this.startActivity(result);

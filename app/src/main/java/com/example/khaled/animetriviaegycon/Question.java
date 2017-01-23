@@ -14,6 +14,7 @@ public class Question implements Serializable {
     private String thirdAns;
     private String picUrl;
     private int Score;
+    private long TimeScore;
 
     public Question(String anime, String question, String correctAns, String secAns, String thirdAns, String picUrl) {
         this.anime = anime;
@@ -75,4 +76,12 @@ public class Question implements Serializable {
     public int getScore() {return Score;}
 
     public void setScore(int score) {Score = score;}
+
+    public long getTimeScore() {
+        return TimeScore;
+    }
+
+    public void setTimeScore(long timeScore) {
+        TimeScore = timeScore;
+    }
 }

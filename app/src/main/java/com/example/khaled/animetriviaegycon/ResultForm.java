@@ -13,14 +13,16 @@ public class ResultForm {
     private int CorrectAnswers;
     private int WrongAnswers;
     private long TimeInMillis;
+    private long timeScore;
 
-    public ResultForm(String userID, String firstName, String lastName, int correctAnswers, int wrongAnswers, long timeInMillis) {
+    public ResultForm(String userID, String firstName, String lastName, int correctAnswers, int wrongAnswers, long timeInMillis, long timescore) {
         UserID = userID;
         this.firstName = firstName;
         this.lastName = lastName;
         CorrectAnswers = correctAnswers;
         WrongAnswers = wrongAnswers;
         TimeInMillis = timeInMillis;
+        timeScore = timescore;
     }
 
     public String getUserID() {
@@ -69,5 +71,13 @@ public class ResultForm {
 
     public void setTimeInMillis(long timeInMillis) {
         TimeInMillis = timeInMillis;
+    }
+
+    public long getTimeScore() {
+        return timeScore;
+    }
+
+    public void setTimeScore(long timeScore) {
+        this.timeScore = timeScore;
     }
 }

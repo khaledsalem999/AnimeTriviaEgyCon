@@ -22,11 +22,13 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 public class ResultsActivity extends AppCompatActivity {
     ArrayList<Question> questionList;
     int score=0;
     long Duration=0;
+    long TimeScore=0;
     FirebaseAuth auth= FirebaseAuth.getInstance();
     DatabaseReference ref= FirebaseDatabase.getInstance().getReference("results");
 
@@ -40,6 +42,7 @@ public class ResultsActivity extends AppCompatActivity {
 
         questionList = (ArrayList<Question>) getIntent().getSerializableExtra("Questions");
         Duration = getIntent().getLongExtra("Time",0);
+        TimeScore = getIntent().getLongExtra("TimeScore",0);
 
         for (int i=0; i<questionList.size();i++){
             if(questionList.get(i).getScore()==1){
@@ -55,7 +58,12 @@ public class ResultsActivity extends AppCompatActivity {
         final TextView rans = (TextView) findViewById(R.id.rightansResults);
         final TextView rank = (TextView) findViewById(R.id.worldplaceResults);
         HSLable.setText("Duration");
-        personalscores.setText( Long.toString((Duration/60000)) +":"+ Long.toString(Duration/1000)+":" + Long.toString((Duration%1000)/10) );
+        personalscores.setText( String.format("%02d:%02d:%02d",
+                TimeUnit.MILLISECONDS.toHours(Duration),
+                TimeUnit.MILLISECONDS.toMinutes(Duration) -
+                        TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(Duration)),
+                TimeUnit.MILLISECONDS.toSeconds(Duration) -
+                        TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(Duration))));
         rans.setText(Integer.toString(score));
 
         //Animation Declaration
@@ -104,7 +112,7 @@ public class ResultsActivity extends AppCompatActivity {
                 String fname= dataSnapshot.child(userId).child("firstName").getValue().toString();
                 String lname= dataSnapshot.child(userId).child("lastName").getValue().toString();;
 
-                ResultForm result = new ResultForm(userId, fname, lname, score, 20-score, Duration);
+                ResultForm result = new ResultForm(userId, fname, lname, score, 20-score, Duration,TimeScore);
 
                 ref= FirebaseDatabase.getInstance().getReference("results");
                 ref.push().setValue(result);

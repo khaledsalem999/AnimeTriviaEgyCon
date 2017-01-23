@@ -29,12 +29,13 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class LeaderActivity extends Fragment {
     ListView lstItems;
     ArrayAdapter<String> allItemsAdapter;
-    String newName;
-    ArrayList<String> names;
+    String id;
+    ArrayList<String> ids;
 
     public LeaderActivity() {
         // Required empty public constructor
@@ -52,33 +53,39 @@ public class LeaderActivity extends Fragment {
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.content_leader, container, false);
         lstItems = (ListView)view.findViewById(R.id.lista);
-        names=new ArrayList<String>();
-        newName="";
+        ids=new ArrayList<String>();
+        id="";
         setHasOptionsMenu(true);
         final ArrayList<String> prueba = new ArrayList<String>();
         allItemsAdapter = new ArrayAdapter<String>(getActivity().getBaseContext(), R.layout.content_leader_text, prueba);
 
         final DatabaseReference ref = FirebaseDatabase.getInstance().getReference("results");
-        Query query = ref.orderByChild("wrongAnswers");
+        Query query = ref.orderByChild("timeScore");
 
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // Inflate the layout for this fragment
                 for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
-                    newName= postSnapshot.child("firstName").getValue().toString()
-                            + " "+postSnapshot.child("lastName").getValue().toString();
+                    id= postSnapshot.child("userID").getValue().toString();
+                    String fname = postSnapshot.child("firstName").getValue().toString();
+                    String lname = postSnapshot.child("lastName").getValue().toString();
 
-                    if(names.contains(newName)!=true){
-                        names.add(newName);
-                        String score = "    "+ postSnapshot.child("correctAnswers").getValue().toString();
+                    if(ids.contains(id)!=true){
+                        ids.add(id);
+                        String score = "    " + postSnapshot.child("correctAnswers").getValue().toString();
 
                         String time = postSnapshot.child("timeInMillis").getValue().toString();
 
                         long Duration = Long.parseLong(time);
 
-                        prueba.add(newName + score + "     " + (int) ((Duration/1000*60)%60) + ":" + (int) ((Duration*0.001)%60) + ":" +(int)(Duration/100) );
-                        Log.e("Get Data", newName);
+                        prueba.add(fname+" "+lname + score + "     " + String.format("%02d:%02d:%02d",
+                                TimeUnit.MILLISECONDS.toHours(Duration),
+                                TimeUnit.MILLISECONDS.toMinutes(Duration) -
+                                        TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(Duration)),
+                                TimeUnit.MILLISECONDS.toSeconds(Duration) -
+                                        TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(Duration))));
+                        Log.e("Get Data", id);
                     }
 
                     lstItems.setAdapter(allItemsAdapter);

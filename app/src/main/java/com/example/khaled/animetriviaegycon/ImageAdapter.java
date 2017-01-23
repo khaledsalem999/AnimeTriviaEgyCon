@@ -113,9 +113,11 @@ public class ImageAdapter extends BaseAdapter {
                                     Intent quiz = new Intent(context, QuestionActivity.class);
                                     int counter=0;
                                     long millis=0;
+                                    long timescore=0;
                                     quiz.putExtra("Counter", counter);
                                     quiz.putExtra("Questions", questionList);
                                     quiz.putExtra("Time",millis);
+                                    quiz.putExtra("TimeScore",timescore);
                                     questions.clear();
                                     selectedAnime.clear();
                                     selectedPosition.clear();
