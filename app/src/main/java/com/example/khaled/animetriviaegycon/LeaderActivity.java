@@ -61,6 +61,7 @@ public class LeaderActivity extends Fragment {
 
         final DatabaseReference ref = FirebaseDatabase.getInstance().getReference("results");
         Query query = ref.orderByChild("timeScore");
+        final int[] index = {0};
 
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -79,12 +80,12 @@ public class LeaderActivity extends Fragment {
 
                         long Duration = Long.parseLong(time);
 
-                        prueba.add(fname+" "+lname + score + "     " + String.format("%02d:%02d:%02d",
-                                TimeUnit.MILLISECONDS.toHours(Duration),
+                        prueba.add((index[0]+1) +"    "+ fname+" "+lname + score + "     " + String.format("%02d:%02d",
                                 TimeUnit.MILLISECONDS.toMinutes(Duration) -
                                         TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(Duration)),
                                 TimeUnit.MILLISECONDS.toSeconds(Duration) -
                                         TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(Duration))));
+                        index[0]++;
                         Log.e("Get Data", id);
                     }
 
