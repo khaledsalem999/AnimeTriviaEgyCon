@@ -33,6 +33,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 import static android.R.attr.animation;
 
@@ -102,7 +103,12 @@ public class StatusActivity extends Fragment {
                         }
                         personalscores.setText(Long.toString(best[0]));
                         rans.setText(Integer.toString(total[0]));
-                        fanimu.setText(Long.toString(bestDuration[0] /60000) + ":"+ Long.toString(bestDuration[0] /1000) +":"+ Long.toString((bestDuration[0] %1000)/10));
+                        fanimu.setText(String.format("%02d:%02d:%02d",
+                                TimeUnit.MILLISECONDS.toHours(bestDuration[0]),
+                                TimeUnit.MILLISECONDS.toMinutes(bestDuration[0]) -
+                                        TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(bestDuration[0])),
+                                TimeUnit.MILLISECONDS.toSeconds(bestDuration[0]) -
+                                        TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(bestDuration[0]))));
                         RatingBar rate = (RatingBar) view.findViewById(R.id.ratingBar);
                         rate.setMax((int)max);
                         rate.setProgress((int)total[0]);

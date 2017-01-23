@@ -174,6 +174,8 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
         buttons[2] = (Button) findViewById(R.id.ans3);
         int id= b.getId();
 
+        Qtimer.cancel();
+
         switch(id){
             case R.id.ans1:
             {
@@ -252,6 +254,7 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
 
         if(counter<19){
             counter++;
+            Qtimer.cancel();
             contbutton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -268,6 +271,7 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
             });
         }
         else{
+            Qtimer.cancel();
             contbutton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
