@@ -17,7 +17,9 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -71,6 +73,7 @@ public class ImageAdapter extends BaseAdapter {
             mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             button = (FloatingActionButton) ParentView.findViewById(R.id.floatingActionButton);
             button.setImageResource(R.drawable.ic_menu_send);
+
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -78,60 +81,79 @@ public class ImageAdapter extends BaseAdapter {
                     final ProgressDialog loading = new ProgressDialog(context);
                     loading.setMessage("Processing, please wait...");
                     loading.show();
-                    DatabaseReference ref= FirebaseDatabase.getInstance().getReference("questions");
-                    for(int i=0; i<20; i++){
-                        final int finalI = i;
-                        ref.orderByChild("0").equalTo(selectedAnime.get(i)).addListenerForSingleValueEvent(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(DataSnapshot dataSnapshot) {
-                                String keyStart= dataSnapshot.getChildren().iterator().next().getKey().toString();
-                                int index;
-                                Question newQuestion;
+                    final DatabaseReference ref= FirebaseDatabase.getInstance().getReference("questions");
+                    DatabaseReference ref2= FirebaseDatabase.getInstance().getReference("results");
+                    FirebaseAuth auth = FirebaseAuth.getInstance();
 
-                                while(true) {
-                                    index = (int) (Integer.parseInt(keyStart) + Math.random() * dataSnapshot.getChildrenCount());
-                                    String questionText = dataSnapshot.child(Integer.toString(index)).child("2").getValue().toString();
-                                    String ans1 = dataSnapshot.child(Integer.toString(index)).child("3").getValue().toString();
-                                    String ans2 = dataSnapshot.child(Integer.toString(index)).child("4").getValue().toString();
-                                    String ans3 = dataSnapshot.child(Integer.toString(index)).child("5").getValue().toString();
-                                    String name = dataSnapshot.child(Integer.toString(index)).child("0").getValue().toString();
-                                    String url =  dataSnapshot.child(Integer.toString(index)).child("6").getValue().toString();
-                                    newQuestion = new Question(name, questionText, ans1, ans2, ans3, url);
+                    ref2.orderByChild("userID").equalTo(auth.getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            if(dataSnapshot.getChildrenCount()<2){
+                                for(int i=0; i<20; i++) {
+                                    final int finalI = i;
+                                    ref.orderByChild("0").equalTo(selectedAnime.get(i)).addListenerForSingleValueEvent(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(DataSnapshot dataSnapshot) {
+                                            String keyStart= dataSnapshot.getChildren().iterator().next().getKey().toString();
+                                            int index;
+                                            Question newQuestion;
 
-                                    if(questions.contains(questionText) && newQuestion!=null){
-                                        continue;
-                                    }
-                                    else{
-                                        questions.add(questionText);
-                                        questionList.add(newQuestion);
-                                        break;
-                                    }
-                                }
+                                            while(true) {
+                                                index = (int) (Integer.parseInt(keyStart) + Math.random() * dataSnapshot.getChildrenCount());
+                                                String questionText = dataSnapshot.child(Integer.toString(index)).child("2").getValue().toString();
+                                                String ans1 = dataSnapshot.child(Integer.toString(index)).child("3").getValue().toString();
+                                                String ans2 = dataSnapshot.child(Integer.toString(index)).child("4").getValue().toString();
+                                                String ans3 = dataSnapshot.child(Integer.toString(index)).child("5").getValue().toString();
+                                                String name = dataSnapshot.child(Integer.toString(index)).child("0").getValue().toString();
+                                                String url =  dataSnapshot.child(Integer.toString(index)).child("6").getValue().toString();
+                                                newQuestion = new Question(name, questionText, ans1, ans2, ans3, url);
 
-                                if(questionList.size()==20){
+                                                if(questions.contains(questionText) && newQuestion!=null){
+                                                    continue;
+                                                }
+                                                else{
+                                                    questions.add(questionText);
+                                                    questionList.add(newQuestion);
+                                                    break;
+                                                }
+                                            }
 
-                                    Intent quiz = new Intent(context, QuestionActivity.class);
-                                    int counter=0;
-                                    long millis=0;
-                                    long timescore=0;
-                                    quiz.putExtra("Counter", counter);
-                                    quiz.putExtra("Questions", questionList);
-                                    quiz.putExtra("Time",millis);
-                                    quiz.putExtra("TimeScore",timescore);
-                                    questions.clear();
-                                    selectedAnime.clear();
-                                    selectedPosition.clear();
-                                    context.startActivity(quiz);
-                                    loading.dismiss();
-                                    ((Activity)context).finish();                                }
+                                            if(questionList.size()==20){
 
-                                //dataSnapshot.child(Integer.toString(index)).getChildren().iterator().next().child("2").getValue().toString()
+                                                Intent quiz = new Intent(context, QuestionActivity.class);
+                                                int counter=0;
+                                                long millis=0;
+                                                long timescore=0;
+                                                quiz.putExtra("Counter", counter);
+                                                quiz.putExtra("Questions", questionList);
+                                                quiz.putExtra("Time",millis);
+                                                quiz.putExtra("TimeScore",timescore);
+                                                questions.clear();
+                                                selectedAnime.clear();
+                                                selectedPosition.clear();
+                                                context.startActivity(quiz);
+                                                loading.dismiss();
+                                                ((Activity)context).finish();                                }
+
+                                            //dataSnapshot.child(Integer.toString(index)).getChildren().iterator().next().child("2").getValue().toString()
+                                        }
+                                        @Override
+                                        public void onCancelled(DatabaseError databaseError) {
+                                        }
+                                    });
+                                }//endfor
                             }
-                            @Override
-                            public void onCancelled(DatabaseError databaseError) {
+                            else {
+                                loading.dismiss();
+                                Toast.makeText(context, "You are not eligible for more entries.", Toast.LENGTH_SHORT).show();
                             }
-                        });
-                    }
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
                 }
             });
         }

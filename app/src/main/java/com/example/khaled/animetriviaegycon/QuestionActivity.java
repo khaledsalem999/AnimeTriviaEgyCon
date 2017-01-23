@@ -1,5 +1,7 @@
 package com.example.khaled.animetriviaegycon;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.media.Image;
@@ -22,6 +24,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -34,8 +37,12 @@ import java.lang.reflect.Array;
 import java.sql.Time;
 import java.util.ArrayList;
 
+import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
+
 public class QuestionActivity extends AppCompatActivity implements View.OnClickListener{
     DatabaseReference ref = FirebaseDatabase.getInstance().getReference("questions");
+    FirebaseAuth auth= FirebaseAuth.getInstance();
+
     int counter;
     ArrayList<Question> questionList;
     private CountDownTimer Qtimer;
@@ -44,6 +51,9 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
     long Duration;
     long TimeScore;
     long tillFinished;
+    int score=0;
+    int pauseCount=0;
+    final Context context= this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -220,8 +230,64 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
 
     @Override
     public void onBackPressed() {
-        Toast.makeText(QuestionActivity.this, "There is no going back :)",
-                Toast.LENGTH_LONG).show();
+        Toast.makeText(QuestionActivity.this, "You can't go back.", Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onPause(){
+        super.onPause();
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (pauseCount <1) {
+            pauseCount++;
+        }
+        else if(pauseCount>=1) {
+            Toast.makeText(QuestionActivity.this, "Your trial has been submitted. Please restart the application.", Toast.LENGTH_LONG).show();
+            writeResult();
+            this.finish();
+        }
+    }
+
+    public void writeResult(){
+        for (int i=0; i<questionList.size();i++){
+            if(questionList.get(i).getScore()==1){
+                score+=1;
+            }
+        }
+
+        final String userId = auth.getCurrentUser().getUid();
+        ref = FirebaseDatabase.getInstance().getReference("users");
+        ref.orderByChild("id").equalTo(userId).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String fname= dataSnapshot.child(userId).child("firstName").getValue().toString();
+                String lname= dataSnapshot.child(userId).child("lastName").getValue().toString();;
+
+                ResultForm result = new ResultForm(userId, fname, lname, score, 20-score, Duration,TimeScore);
+
+                ref= FirebaseDatabase.getInstance().getReference("results");
+                ref.push().setValue(result);
+                triggerRebirth(context);
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+    }
+
+    public static void triggerRebirth(Context context) {
+        Intent intent = new Intent(context, RulesActivity.class);
+        intent.addFlags(FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
+        if (context instanceof Activity) {
+            ((Activity) context).finish();
+        }
+
+        Runtime.getRuntime().exit(0);
     }
 
 }
