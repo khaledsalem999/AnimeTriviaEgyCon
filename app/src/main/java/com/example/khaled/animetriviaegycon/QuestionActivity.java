@@ -168,7 +168,10 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
     public void onClick(View view) {
         Button b = (Button) view;
         Button contbutton = (Button) findViewById(R.id.cont);
-
+        Button buttons[] = new Button[3];
+        buttons[0] = (Button) findViewById(R.id.ans1);
+        buttons[1] = (Button) findViewById(R.id.ans2);
+        buttons[2] = (Button) findViewById(R.id.ans3);
         int id= b.getId();
 
         switch(id){
@@ -178,12 +181,20 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
                     questionList.get(counter).setScore(1);
                     TimeScore = TimeScore +(-1000000 - tillFinished);
                     contbutton.setVisibility(View.VISIBLE);
+                    buttons[1].setVisibility(View.INVISIBLE);
+                    buttons[1].setEnabled(false);
+                    buttons[2].setVisibility(View.INVISIBLE);
+                    buttons[2].setEnabled(false);
                     b.setBackgroundColor(Color.GREEN);
                 }
                 else{
                     questionList.get(counter).setScore(0);
                     questionList.get(counter).setTimeScore(0);
                     contbutton.setVisibility(View.VISIBLE);
+                    buttons[1].setVisibility(View.INVISIBLE);
+                    buttons[1].setEnabled(false);
+                    buttons[2].setVisibility(View.INVISIBLE);
+                    buttons[2].setEnabled(false);
                     b.setBackgroundColor(Color.RED);
                 }
                 break;
@@ -194,11 +205,19 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
                     questionList.get(counter).setScore(1);
                     TimeScore = TimeScore +(-1000000 - tillFinished);
                     b.setBackgroundColor(Color.GREEN);
+                    buttons[0].setVisibility(View.INVISIBLE);
+                    buttons[0].setEnabled(false);
+                    buttons[2].setVisibility(View.INVISIBLE);
+                    buttons[2].setEnabled(false);
                     contbutton.setVisibility(View.VISIBLE);
                 }
                 else{
                     questionList.get(counter).setScore(0);
                     questionList.get(counter).setTimeScore(0);
+                    buttons[0].setVisibility(View.INVISIBLE);
+                    buttons[0].setEnabled(false);
+                    buttons[2].setVisibility(View.INVISIBLE);
+                    buttons[2].setEnabled(false);
                     b.setBackgroundColor(Color.RED);
                     contbutton.setVisibility(View.VISIBLE);
                 }
@@ -210,12 +229,20 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
                     questionList.get(counter).setScore(1);
                     TimeScore = TimeScore +(-1000000 - tillFinished);
                     b.setBackgroundColor(Color.GREEN);
+                    buttons[0].setVisibility(View.INVISIBLE);
+                    buttons[0].setEnabled(false);
+                    buttons[1].setVisibility(View.INVISIBLE);
+                    buttons[1].setEnabled(false);
                     contbutton.setVisibility(View.VISIBLE);
                 }
                 else{
                     questionList.get(counter).setScore(0);
                     questionList.get(counter).setTimeScore(0);
                     b.setBackgroundColor(Color.RED);
+                    buttons[0].setVisibility(View.INVISIBLE);
+                    buttons[0].setEnabled(false);
+                    buttons[1].setVisibility(View.INVISIBLE);
+                    buttons[1].setEnabled(false);
                     contbutton.setVisibility(View.VISIBLE);
                 }
                 break;
