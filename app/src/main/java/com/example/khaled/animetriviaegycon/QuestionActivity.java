@@ -149,7 +149,7 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
             {
                 if(questionList.get(counter).getCorrectAns().substring(1).equals(b.getText())){
                     questionList.get(counter).setScore(1);
-                    TimeScore = TimeScore +(1 - tillFinished);
+                    TimeScore = TimeScore +(-1000000 - tillFinished);
                 }
                 else{
                     questionList.get(counter).setScore(0);
@@ -161,7 +161,7 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
             {
                 if(questionList.get(counter).getCorrectAns().substring(1).equals(b.getText())){
                     questionList.get(counter).setScore(1);
-                    TimeScore = TimeScore +(1 - tillFinished);
+                    TimeScore = TimeScore +(-1000000 - tillFinished);
                 }
                 else{
                     questionList.get(counter).setScore(0);
@@ -173,7 +173,7 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
             {
                 if(questionList.get(counter).getCorrectAns().substring(1).equals(b.getText())){
                     questionList.get(counter).setScore(1);
-                    TimeScore = TimeScore +(1 - tillFinished);
+                    TimeScore = TimeScore +(-1000000 - tillFinished);
                 }
                 else{
                     questionList.get(counter).setScore(0);
