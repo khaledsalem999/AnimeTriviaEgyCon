@@ -83,6 +83,16 @@
             android:layout_height="wrap_content"
             android:id="@+id/ans3" />
 
+        <Button
+            android:background="#300F22"
+            android:textColor="#ffffff"
+            android:layout_marginTop="10dp"
+            android:text="CONTINUE"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/cont" />
+
         <ProgressBar
             style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="match_parent"

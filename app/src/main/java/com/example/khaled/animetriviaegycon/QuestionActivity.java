@@ -68,6 +68,7 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
         questionList = (ArrayList<Question>) getIntent().getSerializableExtra("Questions");
         Duration = getIntent().getLongExtra("Time",0);
         TimeScore = getIntent().getLongExtra("TimeScore",0);
+        final Button contbutton = (Button) findViewById(R.id.cont);
 
         Log.e("Question", Integer.toString(counter));
 
@@ -80,6 +81,7 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
         progress.setProgress(counter);
 
         Button buttons[] = new Button[3];
+
         buttons[0] = (Button) findViewById(R.id.ans1);
         buttons[1] = (Button) findViewById(R.id.ans2);
         buttons[2] = (Button) findViewById(R.id.ans3);
@@ -115,31 +117,44 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
 
             @Override
             public void onFinish() {
+                contbutton.setVisibility(View.VISIBLE);
                 if(counter<19){
-                    Duration+=TimeInMills;
-                    questionList.get(counter).setScore(0);
-                    questionList.get(counter).setTimeScore(0);
                     counter++;
-                    Intent quiz = new Intent(QuestionActivity.this, QuestionActivity.class);
-                    quiz.putExtra("Counter", counter);
-                    quiz.putExtra("Questions",questionList);
-                    quiz.putExtra("Time",Duration);
-                    quiz.putExtra("TimeScore",TimeScore);
-                    finish();
-                    Qtimer.cancel();
-                    QuestionActivity.this.startActivity(quiz);
+                    contbutton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Duration+=TimeInMills;
+                            questionList.get(counter).setScore(0);
+                            questionList.get(counter).setTimeScore(0);
+                            Intent quiz = new Intent(QuestionActivity.this, QuestionActivity.class);
+                            quiz.putExtra("Counter", counter);
+                            quiz.putExtra("Questions",questionList);
+                            quiz.putExtra("Time",Duration);
+                            quiz.putExtra("TimeScore",TimeScore);
+                            finish();
+                            Qtimer.cancel();
+                            QuestionActivity.this.startActivity(quiz);
+                        }
+                    });
                 }
                 else{
-                    Duration+=TimeInMills;
-                    questionList.get(counter).setScore(0);
-                    questionList.get(counter).setTimeScore(0);
-                    Intent result = new Intent(QuestionActivity.this, ResultsActivity.class);
-                    result.putExtra("Questions",questionList);
-                    result.putExtra("Time",Duration);
-                    result.putExtra("TimeScore",TimeScore);
-                    finish();
-                    Qtimer.cancel();
-                    QuestionActivity.this.startActivity(result);
+                    contbutton.setVisibility(View.VISIBLE);
+                    contbutton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Duration+=TimeInMills;
+                            questionList.get(counter).setScore(0);
+                            questionList.get(counter).setTimeScore(0);
+                            Intent result = new Intent(QuestionActivity.this, ResultsActivity.class);
+                            result.putExtra("Questions",questionList);
+                            result.putExtra("Time",Duration);
+                            result.putExtra("TimeScore",TimeScore);
+                            finish();
+                            Qtimer.cancel();
+                            QuestionActivity.this.startActivity(result);
+                        }
+                    });
+
                 }
             }
         };
@@ -152,6 +167,7 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
     @Override
     public void onClick(View view) {
         Button b = (Button) view;
+        Button contbutton = (Button) findViewById(R.id.cont);
 
         int id= b.getId();
 
@@ -161,11 +177,13 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
                 if(questionList.get(counter).getCorrectAns().substring(1).equals(b.getText())){
                     questionList.get(counter).setScore(1);
                     TimeScore = TimeScore +(-1000000 - tillFinished);
+                    contbutton.setVisibility(View.VISIBLE);
                     b.setBackgroundColor(Color.GREEN);
                 }
                 else{
                     questionList.get(counter).setScore(0);
                     questionList.get(counter).setTimeScore(0);
+                    contbutton.setVisibility(View.VISIBLE);
                     b.setBackgroundColor(Color.RED);
                 }
                 break;
@@ -176,11 +194,13 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
                     questionList.get(counter).setScore(1);
                     TimeScore = TimeScore +(-1000000 - tillFinished);
                     b.setBackgroundColor(Color.GREEN);
+                    contbutton.setVisibility(View.VISIBLE);
                 }
                 else{
                     questionList.get(counter).setScore(0);
                     questionList.get(counter).setTimeScore(0);
                     b.setBackgroundColor(Color.RED);
+                    contbutton.setVisibility(View.VISIBLE);
                 }
                 break;
             }
@@ -190,11 +210,13 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
                     questionList.get(counter).setScore(1);
                     TimeScore = TimeScore +(-1000000 - tillFinished);
                     b.setBackgroundColor(Color.GREEN);
+                    contbutton.setVisibility(View.VISIBLE);
                 }
                 else{
                     questionList.get(counter).setScore(0);
                     questionList.get(counter).setTimeScore(0);
                     b.setBackgroundColor(Color.RED);
+                    contbutton.setVisibility(View.VISIBLE);
                 }
                 break;
             }
@@ -203,6 +225,9 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
 
         if(counter<19){
             counter++;
+            contbutton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
                     Duration+=TimeInMills;
                     Intent quiz = new Intent(QuestionActivity.this, QuestionActivity.class);
                     quiz.putExtra("Counter", counter);
@@ -212,8 +237,13 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
                     Qtimer.cancel();
                     finish();
                     QuestionActivity.this.startActivity(quiz);
+                }
+            });
         }
         else{
+            contbutton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
                     Duration+=TimeInMills;
                     Intent result = new Intent(QuestionActivity.this, ResultsActivity.class);
                     result.putExtra("Questions",questionList);
@@ -222,6 +252,8 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
                     Qtimer.cancel();
                     finish();
                     QuestionActivity.this.startActivity(result);
+                }
+            });
 
         }
     }
