@@ -1,6 +1,7 @@
 package com.example.khaled.animetriviaegycon;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.media.Image;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -150,10 +151,12 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
                 if(questionList.get(counter).getCorrectAns().substring(1).equals(b.getText())){
                     questionList.get(counter).setScore(1);
                     TimeScore = TimeScore +(-1000000 - tillFinished);
+                    b.setBackgroundColor(Color.GREEN);
                 }
                 else{
                     questionList.get(counter).setScore(0);
                     questionList.get(counter).setTimeScore(0);
+                    b.setBackgroundColor(Color.RED);
                 }
                 break;
             }
@@ -162,10 +165,12 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
                 if(questionList.get(counter).getCorrectAns().substring(1).equals(b.getText())){
                     questionList.get(counter).setScore(1);
                     TimeScore = TimeScore +(-1000000 - tillFinished);
+                    b.setBackgroundColor(Color.GREEN);
                 }
                 else{
                     questionList.get(counter).setScore(0);
                     questionList.get(counter).setTimeScore(0);
+                    b.setBackgroundColor(Color.RED);
                 }
                 break;
             }
@@ -174,10 +179,12 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
                 if(questionList.get(counter).getCorrectAns().substring(1).equals(b.getText())){
                     questionList.get(counter).setScore(1);
                     TimeScore = TimeScore +(-1000000 - tillFinished);
+                    b.setBackgroundColor(Color.GREEN);
                 }
                 else{
                     questionList.get(counter).setScore(0);
                     questionList.get(counter).setTimeScore(0);
+                    b.setBackgroundColor(Color.RED);
                 }
                 break;
             }
