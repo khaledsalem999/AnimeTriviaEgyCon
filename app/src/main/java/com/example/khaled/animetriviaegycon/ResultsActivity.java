@@ -50,7 +50,6 @@ public class ResultsActivity extends AppCompatActivity {
             }
         }
 
-
         final TextView HSLable = (TextView) findViewById(R.id.HighScoreLableResults);
         final TextView rightanslables = (TextView) findViewById(R.id.rightanslableResults);
         final TextView leaderboardlables = (TextView) findViewById(R.id.leaderboardlableResults);

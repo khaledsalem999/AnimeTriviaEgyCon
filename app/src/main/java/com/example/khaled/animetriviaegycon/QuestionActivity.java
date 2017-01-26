@@ -30,6 +30,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import org.w3c.dom.Text;
 
@@ -160,6 +161,7 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
         };
 
         PicassoClient.downloadImage(this,questionList.get(counter).getPicUrl(),img);
+        //Picasso.with(context).load(questionList.get(counter).getPicUrl()).into(img);
         Qtimer.start();
 
     }
