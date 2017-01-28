@@ -81,7 +81,7 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
         progress.setMax(20);
         progress.setProgress(counter);
 
-        Button buttons[] = new Button[3];
+        final Button buttons[] = new Button[3];
 
         buttons[0] = (Button) findViewById(R.id.ans1);
         buttons[1] = (Button) findViewById(R.id.ans2);
@@ -119,6 +119,10 @@ public class QuestionActivity extends AppCompatActivity implements View.OnClickL
             @Override
             public void onFinish() {
                 contbutton.setVisibility(View.VISIBLE);
+                buttons[0].setEnabled(false);
+                buttons[1].setEnabled(false);
+                buttons[2].setEnabled(false);
+
                 if(counter<19){
                     counter++;
                     contbutton.setOnClickListener(new View.OnClickListener() {

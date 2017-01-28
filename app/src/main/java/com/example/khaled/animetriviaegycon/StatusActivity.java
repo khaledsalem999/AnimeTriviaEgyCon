@@ -8,6 +8,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -48,6 +49,7 @@ public class StatusActivity extends Fragment {
         final long[] bestDuration = {100000000};
         final int[] total = {0};
         final int[] index = {1};
+        final ArrayList<String> idList = new ArrayList<String>();
 
         final View view = inflater.inflate(R.layout.content_status, container, false);
 
@@ -74,6 +76,8 @@ public class StatusActivity extends Fragment {
         rank.setVisibility(View.INVISIBLE);
 
         final DatabaseReference ref = FirebaseDatabase.getInstance().getReference("results");
+        final DatabaseReference ref2 = FirebaseDatabase.getInstance().getReference("results");
+
         final FirebaseAuth auth = FirebaseAuth.getInstance();
 
         ref.orderByChild("userID").equalTo(auth.getCurrentUser().getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -93,22 +97,32 @@ public class StatusActivity extends Fragment {
                     total[0] += postSnapshot.child("correctAnswers").getValue(Integer.class);
                 }
 
-                ref.orderByChild("wrongAnswers").addListenerForSingleValueEvent(new ValueEventListener() {
+                ref2.orderByChild("timeScore").addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
-                            if (postSnapshot.child("userID").getValue(String.class).equals(auth.getCurrentUser().getUid()) != true) {
+                            if(postSnapshot.child("userID").getValue(String.class).equals(auth.getCurrentUser().getUid())){
+                                break;
+                            }
+                            else if (postSnapshot.child("userID").getValue(String.class).equals(auth.getCurrentUser().getUid()) != true
+                                     && idList.contains(postSnapshot.child("userID").getValue(String.class))!=true) {
+                                idList.add(postSnapshot.child("userID").getValue(String.class));
                                 index[0]++;
+                                Log.d("rank",Integer.toString(index[0]));
                             }
                         }
+
                         personalscores.setText(Long.toString(best[0]));
+
                         rans.setText(Integer.toString(total[0]));
+
                         fanimu.setText(String.format("%02d:%02d:%02d",
                                 TimeUnit.MILLISECONDS.toHours(bestDuration[0]),
                                 TimeUnit.MILLISECONDS.toMinutes(bestDuration[0]) -
                                         TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(bestDuration[0])),
                                 TimeUnit.MILLISECONDS.toSeconds(bestDuration[0]) -
                                         TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(bestDuration[0]))));
+
                         RatingBar rate = (RatingBar) view.findViewById(R.id.ratingBar);
                         rate.setMax((int)max);
                         rate.setProgress((int)total[0]);

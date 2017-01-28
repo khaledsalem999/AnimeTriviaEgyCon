@@ -107,16 +107,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         }
 
         mPasswordView = (EditText) findViewById(R.id.password);
-        mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
-                if (id == R.id.login || id == EditorInfo.IME_NULL) {
-                    attemptLogin();
-                    return true;
-                }
-                return false;
-            }
-        });
 
         //Get the buttons in our form
         Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
