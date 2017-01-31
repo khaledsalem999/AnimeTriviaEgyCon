@@ -15,10 +15,10 @@ import static android.R.attr.id;
 public class PicassoClient {
     public static void downloadImage(Context c, String url, ImageView img){
         if(url != null && url.length()>0) {
-                Picasso.with(c).load(c.getResources().getIdentifier(url, "mipmap", c.getPackageName())).placeholder(R.drawable.placeholder).into(img);
+                Picasso.with(c).load(c.getResources().getIdentifier(url, "mipmap", c.getPackageName())).placeholder(R.mipmap.placeholder).into(img);
         }
         else{
-            Picasso.with(c).load(R.drawable.placeholder).into(img);
+            Picasso.with(c).load(R.mipmap.placeholder).into(img);
         }
     }
 }

@@ -23,9 +23,10 @@ public class RulesActivity extends AppCompatActivity {
 
         TextView DaRules = (TextView) findViewById(R.id.Rules);
         DaRules.setTextSize(20);
-        DaRules.setText(" 1. Pick 10 anime series of your selection to be quizzed on." +
-                "\n\n 2. You have 30 seconds to answer each question" +
-                "\n\n 3. Solve the randomized questions correctly as fast as possible, the timer is the tie breaker!");
+        DaRules.setText(" 1. Every person gets 2 chances for participation." +
+                        "\n\n 2. You choose the 10 anime series that you want to be quizzed on." +
+                "\n\n 3. You have 30 seconds to answer each question." +
+                "\n\n 4. If you exit the application, your results are submitted.");
 
         Button Startbutton = (Button) findViewById(R.id.button2);
 
