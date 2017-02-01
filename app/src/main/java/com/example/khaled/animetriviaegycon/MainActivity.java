@@ -46,6 +46,7 @@ public class MainActivity extends AppCompatActivity
     FragmentManager fragmentManager = getSupportFragmentManager();
     LeaderActivity Lactivity = new LeaderActivity();
     StatusActivity Sactivity = new StatusActivity();
+    Copyright copyright = new Copyright();
     com.example.khaled.animetriviaegycon.GridView Gview = new com.example.khaled.animetriviaegycon.GridView();
 
     @Override
@@ -155,6 +156,12 @@ public class MainActivity extends AppCompatActivity
 
             fragmentManager.beginTransaction()
                     .replace(R.id.frame, Lactivity)
+                    .commit();
+
+        }else if (id == R.id.nav_about) {
+
+            fragmentManager.beginTransaction()
+                    .replace(R.id.frame, copyright)
                     .commit();
 
         } else if (id == R.id.nav_logout) {

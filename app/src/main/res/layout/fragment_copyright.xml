@@ -1,0 +1,17 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#4A142E"
+    tools:context="com.example.khaled.animetriviaegycon.Copyright">
+
+    <!-- TODO: Update blank fragment layout -->
+    <TextView
+        android:textAlignment="center"
+        android:padding="10dp"
+        android:textColor="#FFFFFF"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="2r3'y hena" />
+
+</FrameLayout>
