@@ -19,6 +19,8 @@ import android.widget.ListAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.facebook.share.model.ShareContent;
+import com.facebook.share.widget.MessageDialog;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -73,6 +75,8 @@ public class ImageAdapter extends BaseAdapter {
             mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             button = (FloatingActionButton) ParentView.findViewById(R.id.floatingActionButton);
             button.setImageResource(R.drawable.ic_menu_send);
+
+            Toast.makeText(context,"Select 10 anime. You can select an anime by tapping it.", Toast.LENGTH_LONG).show();
 
             button.setOnClickListener(new View.OnClickListener() {
                 @Override

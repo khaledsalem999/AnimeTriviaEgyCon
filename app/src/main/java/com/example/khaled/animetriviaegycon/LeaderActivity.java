@@ -86,7 +86,6 @@ public class LeaderActivity extends Fragment {
                                 TimeUnit.MILLISECONDS.toSeconds(Duration) -
                                         TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(Duration))));
                         index[0]++;
-                        Log.e("Get Data", id);
                     }
 
                     lstItems.setAdapter(allItemsAdapter);

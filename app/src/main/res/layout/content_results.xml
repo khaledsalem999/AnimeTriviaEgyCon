@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -55,23 +56,6 @@
                     android:id="@+id/rightanslableResults"
                     android:textAppearance="@style/TextAppearance.AppCompat.Button" />
             </TableRow>
-
-            <TableRow
-                android:gravity="center"
-                android:layout_weight="1"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent" >
-
-                <TextView
-                    android:textColor="#FFFFFF"
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:text="Ranking"
-                    android:textSize="20dp"
-                    android:id="@+id/leaderboardlableResults"
-                    android:visibility="invisible"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Button" />
-            </TableRow>
         </TableLayout>
     </FrameLayout>
 
@@ -115,31 +99,27 @@
                 android:id="@+id/rightansResults"
                 android:textAppearance="@style/TextAppearance.AppCompat.Button" />
         </TableRow>
-
-        <TableRow
-            android:gravity="center"
-            android:layout_weight="1"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" >
-
-            <TextView
-                android:textColor="#FFFFFF"
-                android:text="60"
-                android:textSize="20dp"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:id="@+id/worldplaceResults"
-                android:visibility="invisible"
-                android:textAppearance="@style/TextAppearance.AppCompat.Button" />
-        </TableRow>
     </TableLayout>
+
+    <Button
+        android:background="#7E2856"
+        android:textColor="#FFFFFF"
+        android:text="Done"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/done"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
     <RatingBar
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/ratingBarResults"
         android:layout_centerHorizontal="true"
-        android:layout_alignParentBottom="true"
+        android:layout_above="@+id/done"
         android:isIndicator="true" />
 
     <TextView
@@ -151,7 +131,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="@style/TextAppearance.AppCompat.Body2"
         android:text="YOUR RATING"
-        android:layout_above="@+id/ratingBarResults"
+        android:layout_below="@+id/ratingBarResults"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 

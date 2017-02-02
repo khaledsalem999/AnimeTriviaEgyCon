@@ -10,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.Button;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
@@ -39,6 +40,7 @@ public class ResultsActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        Button done = (Button) findViewById(R.id.done);
 
         questionList = (ArrayList<Question>) getIntent().getSerializableExtra("Questions");
         Duration = getIntent().getLongExtra("Time",0);
@@ -49,13 +51,19 @@ public class ResultsActivity extends AppCompatActivity {
                 score+=1;
             }
         }
+        done.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent restart = new Intent(ResultsActivity.this, RulesActivity.class);
+                finish();
+                ResultsActivity.this.startActivity(restart);
+            }
+        });
 
         final TextView HSLable = (TextView) findViewById(R.id.HighScoreLableResults);
         final TextView rightanslables = (TextView) findViewById(R.id.rightanslableResults);
-        final TextView leaderboardlables = (TextView) findViewById(R.id.leaderboardlableResults);
         final TextView personalscores = (TextView) findViewById(R.id.personalscoreResults);
         final TextView rans = (TextView) findViewById(R.id.rightansResults);
-        final TextView rank = (TextView) findViewById(R.id.worldplaceResults);
         HSLable.setText("Duration");
         personalscores.setText( String.format("%02d:%02d:%02d",
                 TimeUnit.MILLISECONDS.toHours(Duration),
@@ -90,10 +98,8 @@ public class ResultsActivity extends AppCompatActivity {
         //Animation start
         HSLable.startAnimation(animation1);
         rightanslables.startAnimation(animation3);
-        leaderboardlables.startAnimation(animation4);
         personalscores.startAnimation(animation5);
         rans.startAnimation(animation7);
-        rank.startAnimation(animation8);
 
         RatingBar rating = (RatingBar)findViewById(R.id.ratingBarResults);
         rating.setMax(20);

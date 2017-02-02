@@ -12,6 +12,16 @@
         android:textColor="#FFFFFF"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="2r3'y hena" />
+        android:text="This application was created by Hussein Elsherif and Khaled Salem as a part of the EGYcon team. All rights are reserved to the original developers.\n\n
+
+The logos are intellectual property of the EGYcon foundation.\n\n
+
+Contact:\n\n
+Hussein Elsherif:\n
+hyhaez@gmail.com\n\n
+Khaled Salem:\n
+khaledsalem999@gmail.com \n\n
+Islam Risha of the EGYcon foundation:\n
+islam@egycon.me" />
 
 </FrameLayout>

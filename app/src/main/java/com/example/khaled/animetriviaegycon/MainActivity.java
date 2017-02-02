@@ -164,13 +164,12 @@ public class MainActivity extends AppCompatActivity
                     .replace(R.id.frame, copyright)
                     .commit();
 
-        } else if (id == R.id.nav_logout) {
+        } /*else if (id == R.id.nav_logout) {
             FirebaseAuth auth = FirebaseAuth.getInstance();
             finish();
             auth.signOut();
             startActivity(new Intent(this, LoginActivity.class));
-
-        }
+        }*/
 
 
 
