@@ -131,7 +131,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="@style/TextAppearance.AppCompat.Body2"
         android:text="YOUR RATING"
-        android:layout_below="@+id/ratingBarResults"
+        android:layout_above="@+id/ratingBarResults"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 

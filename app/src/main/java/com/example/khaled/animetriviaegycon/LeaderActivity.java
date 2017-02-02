@@ -34,7 +34,6 @@ import java.util.concurrent.TimeUnit;
 public class LeaderActivity extends Fragment {
     ListView lstItems;
     ArrayAdapter<String> allItemsAdapter;
-    String id;
     ArrayList<String> ids;
 
     public LeaderActivity() {
@@ -54,13 +53,13 @@ public class LeaderActivity extends Fragment {
         view = inflater.inflate(R.layout.content_leader, container, false);
         lstItems = (ListView)view.findViewById(R.id.lista);
         ids=new ArrayList<String>();
-        id="";
         setHasOptionsMenu(true);
         final ArrayList<String> prueba = new ArrayList<String>();
         allItemsAdapter = new ArrayAdapter<String>(getActivity().getBaseContext(), R.layout.content_leader_text, prueba);
 
         final DatabaseReference ref = FirebaseDatabase.getInstance().getReference("results");
         Query query = ref.orderByChild("timeScore");
+        final DatabaseReference ref2 = FirebaseDatabase.getInstance().getReference("users");
         final int[] index = {0};
 
         query.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -68,28 +67,42 @@ public class LeaderActivity extends Fragment {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // Inflate the layout for this fragment
                 for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
-                    id= postSnapshot.child("userID").getValue().toString();
-                    String fname = postSnapshot.child("firstName").getValue().toString();
-                    String lname = postSnapshot.child("lastName").getValue().toString();
+                    final String id = postSnapshot.child("userID").getValue().toString();
+                    final String score = "    " + postSnapshot.child("correctAnswers").getValue().toString();
+                    final String time = postSnapshot.child("timeInMillis").getValue().toString();
+                    final long duration = Long.parseLong(time);
 
-                    if(ids.contains(id)!=true){
-                        ids.add(id);
-                        String score = "    " + postSnapshot.child("correctAnswers").getValue().toString();
+                    Log.d("id",id);
+                    if (ids.contains(id) != true && id!=null) {
+                        ref2.orderByKey().equalTo(id).limitToFirst(1).addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                String fname = dataSnapshot.getChildren().iterator().next().child("firstName").getValue().toString();
+                                String lname = dataSnapshot.getChildren().iterator().next().child("lastName").getValue().toString();
+                                String email = dataSnapshot.getChildren().iterator().next().child("email").getValue().toString();
+                                String phone = dataSnapshot.getChildren().iterator().next().child("phoneNumber").getValue().toString();
 
-                        String time = postSnapshot.child("timeInMillis").getValue().toString();
+                                long Duration =duration;
 
-                        long Duration = Long.parseLong(time);
+                                prueba.add((index[0] + 1) + "    " + fname + " " + lname + score + "     " + String.format("%02d:%02d",
+                                        TimeUnit.MILLISECONDS.toMinutes(Duration) -
+                                                TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(Duration)),
+                                        TimeUnit.MILLISECONDS.toSeconds(Duration) -
+                                                TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(Duration)))
+                                        + "\n" + "Email: " + email + "\n" + "Phone: " + phone
+                                );
+                                index[0]++;
+                                lstItems.setAdapter(allItemsAdapter);
+                            }
 
-                        prueba.add((index[0]+1) +"    "+ fname+" "+lname + score + "     " + String.format("%02d:%02d",
-                                TimeUnit.MILLISECONDS.toMinutes(Duration) -
-                                        TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(Duration)),
-                                TimeUnit.MILLISECONDS.toSeconds(Duration) -
-                                        TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(Duration))));
-                        index[0]++;
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
+                        //view.invalidate();
                     }
-
-                    lstItems.setAdapter(allItemsAdapter);
-                    //view.invalidate();
+                    ids.add(id);
                 }
             }
             @Override
